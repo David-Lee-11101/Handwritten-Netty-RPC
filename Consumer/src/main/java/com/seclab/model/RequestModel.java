@@ -1,0 +1,27 @@
+package com.seclab.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@Data
+public class RequestModel {
+
+    private static final Logger logger = LoggerFactory.getLogger(RequestModel.class);
+
+    private String requestId;
+    private String serviceName;
+    private String methodName;
+    private Class<?>[] paramTypes;
+    private Object[] paramValues;
+
+    // 在构造函数中添加参数校验
+    public RequestModel(String requestId, String serviceName, String methodName, Class<?>[] paramTypes, Object[] paramValues) {
+        this.requestId = requestId;
+        this.serviceName = serviceName;
+        this.methodName = methodName;
+        this.paramTypes = paramTypes;
+        this.paramValues = paramValues;
+    }
+}

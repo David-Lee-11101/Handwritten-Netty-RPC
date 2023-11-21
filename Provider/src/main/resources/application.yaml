@@ -1,0 +1,3 @@
+netty.port: 8123
+server:
+  port: 8100

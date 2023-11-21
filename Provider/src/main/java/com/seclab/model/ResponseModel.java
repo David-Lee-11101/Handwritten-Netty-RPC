@@ -1,0 +1,26 @@
+package com.seclab.model;
+
+import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@Data
+public class ResponseModel {
+
+    private static final Logger logger = LoggerFactory.getLogger(ResponseModel.class);
+
+    private String responseId;
+    private String serviceName;
+    private String methodName;
+    private String code;
+    private String data;
+
+    // 在构造函数中添加参数校验
+    public ResponseModel(String responseId, String serviceName, String methodName, String code, String data) {
+        this.responseId = responseId;
+        this.serviceName = serviceName;
+        this.methodName = methodName;
+        this.code = code;
+        this.data = data;
+    }
+}
