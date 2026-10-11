@@ -1,0 +1,75 @@
+Consumer/src/main/java/com/seclab/nettyClient/ClientPromise.java
+  s_7011714e525495::t_ed53d7d124c592 6,9-52,54-55
+  s_7011714e525495::t_f6dd506ce7d4aa 53
+.github/workflows/ci.yml
+  s_7011714e525495::t_8ec9efbb9ea449 1-21
+Consumer/src/test/java/com/seclab/nettyClient/ClientPromiseTest.java
+  s_7011714e525495::t_bda221672fde0e 1-13,15-36,55,59-82
+  s_7011714e525495::t_f096f68d4243cc 14,37-54,56-58
+Consumer/pom.xml
+  s_7011714e525495::t_bda221672fde0e 27-32,35
+Consumer/src/main/java/com/seclab/nettyClient/ClientHandler.java
+  s_7011714e525495::t_6abfe447081396 20
+  s_7011714e525495::t_ed53d7d124c592 19,21-28,32-36,40-41
+Consumer/src/main/java/com/seclab/nettyClient/RpcClientProxyFactory.java
+  s_7011714e525495::t_f6dd506ce7d4aa 1-78
+Provider/pom.xml
+  s_7011714e525495::t_84bfd50331f108 26-31,34
+Provider/src/main/java/com/seclab/nettyServer/ServerChannelInboundHandler.java
+  s_7011714e525495::t_6abfe447081396 51-52,55-60
+.gitignore
+  s_7011714e525495::t_8ec9efbb9ea449 1,3-6
+README.md
+  s_7011714e525495::t_d7fc1de8acde8f 33,39,52-60
+  s_7011714e525495::t_f096f68d4243cc 44
+  s_7011714e525495::t_8ec9efbb9ea449 3-32,34-38,41-43,45-51,61-72
+  s_7011714e525495::t_be3263a3e27b17 40
+  s_7011714e525495::t_7eb826cf0c1d2b 1-2
+Consumer/src/main/java/com/seclab/nettyClient/Client.java
+  s_7011714e525495::t_ed53d7d124c592 14-16,24-27,32,34-35,37,39-40,53,55,58,60-66,69-78,80,86-90,95-96
+  s_7011714e525495::t_55115da0db52ca 36,79,81-82,84-85
+  s_7011714e525495::t_f6dd506ce7d4aa 91-94
+Consumer/src/test/java/com/seclab/nettyClient/ClientHandlerLoggingTest.java
+  s_7011714e525495::t_84bfd50331f108 1-42
+Consumer/src/test/java/com/seclab/nettyClient/RpcLoopbackIntegrationTest.java
+  s_7011714e525495::t_b60aaf49326bee 1-127,131-212
+  s_7011714e525495::t_671dd1d3175838 128-130
+Provider/src/test/java/com/seclab/nettyServer/ServerChannelInboundHandlerLoggingTest.java
+  s_7011714e525495::t_84bfd50331f108 1-12,15-35,42-74
+  s_7011714e525495::t_f51aa1a13ebe63 13-14,36-41
+Consumer/src/main/java/com/seclab/ClientApp.java
+  s_7011714e525495::t_ed53d7d124c592 15,33,35-37
+  s_7011714e525495::t_f6dd506ce7d4aa 4,32
+.github/ISSUE_TEMPLATE/bug.yml
+  s_7011714e525495::t_4b356e19d6f026 1-45
+.github/ISSUE_TEMPLATE/config.yml
+  s_7011714e525495::t_cd35967b619276 1-5
+.github/ISSUE_TEMPLATE/documentation.yml
+  s_7011714e525495::t_de044fb6b54d3d 1-23
+.github/ISSUE_TEMPLATE/feature.yml
+  s_7011714e525495::t_d663f109ccc18c 1-29
+.github/pull_request_template.md
+  s_7011714e525495::t_7faa533cf84d99 1-24
+CONTRIBUTING.md
+  s_7011714e525495::t_0ee699fa420523 1-23
+SECURITY.md
+  s_7011714e525495::t_61a2cf1278d7d5 1-13
+assets/hero.svg
+  s_7011714e525495::t_df7c7884aed127 1-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "bb79219ddbb4f6529039785de94efc370969ee9e",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "恺撒 <weihaodong@xiaohongshu.com>"
+    }
+  }
+}
