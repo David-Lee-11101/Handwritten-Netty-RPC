@@ -48,13 +48,17 @@ public class ServerChannelInboundHandler extends SimpleChannelInboundHandler<Str
 
             ResponseModel responseModel = new ResponseModel(requestId, serviceInterfaceName, methodName, "200", JSON.toJSONString(returnValue));
             sb.append(JSON.toJSONString(responseModel)).append("\n");
-            log.info("被请求函数调用完成，返回结果 {}",sb.toString());
+            log.info("Completed RPC request [requestId={}, service={}, method={}, status=200]",
+                    requestId, serviceInterfaceName, methodName);
             ctx.writeAndFlush(sb);
         } catch (Exception e) {
-            log.error("处理请求出现错误: {}", e.getMessage());
-            ResponseModel responseModel = new ResponseModel(result != null ? result.getRequestId() : "", "", "", "500", e.getMessage());
+            String requestId = result != null ? result.getRequestId() : "";
+            String serviceName = result != null ? result.getServiceName() : "";
+            String methodName = result != null ? result.getMethodName() : "";
+            log.error("Failed RPC request [requestId={}, service={}, method={}, status=500, errorType={}]",
+                    requestId, serviceName, methodName, e.getClass().getSimpleName());
+            ResponseModel responseModel = new ResponseModel(requestId, "", "", "500", e.getMessage());
             String errorCode = JSON.toJSONString(responseModel) + "\n";
-            log.error("错误内容: {}", errorCode);
             ctx.writeAndFlush(errorCode);
         }
     }
