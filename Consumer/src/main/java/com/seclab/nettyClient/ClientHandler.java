@@ -5,7 +5,6 @@ import com.seclab.model.ResponseModel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.util.concurrent.Promise;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -15,26 +14,31 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, String msg) {
-        log.info("收到服务端消息: {}", msg);
-
         ResponseModel responseModel = JSON.parseObject(msg, ResponseModel.class);
         String responseId = responseModel.getResponseId();
-        Promise<String> promise = ClientPromise.PROMISE_MAP.remove(responseId);
-
-        if (promise != null) {
-            String code = responseModel.getCode();
-            if ("200".equals(code)) {
-                promise.setSuccess(responseModel.getData());
-            } else {
-                promise.setFailure(new RuntimeException(responseModel.getData()));
-            }
+        String code = responseModel.getCode();
+        log.info("Received RPC response [requestId={}, status={}]", responseId, code);
+        boolean completed;
+        if ("200".equals(code)) {
+            completed = ClientPromise.succeed(responseId, responseModel.getData());
+        } else {
+            completed = ClientPromise.fail(responseId, new RuntimeException(responseModel.getData()));
         }
+        if (!completed) {
+            log.warn("Ignoring response for unknown request ID {}", responseId);
+        }
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) {
+        ClientPromise.failAll(new java.nio.channels.ClosedChannelException());
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         log.error("发生异常", cause);
-        // 可以选择将异常传播给更上层的处理层，或者在这里进行其他处理
+        ClientPromise.failAll(cause);
+        ctx.close();
     }
 }
 
