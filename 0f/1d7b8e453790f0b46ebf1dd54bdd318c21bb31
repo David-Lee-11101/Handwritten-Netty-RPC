@@ -1,0 +1,69 @@
+tiny-rpc-core/src/main/java/io/smarthome/tinyrpc/core/RpcHandler.java
+  s_7011714e525495::t_befb2c69f0c4f7 1-6
+tiny-rpc-codec/src/test/java/io/smarthome/tinyrpc/codec/JsonLineCodecTest.java
+  s_7011714e525495::t_de5157143e2d2a 1-32
+tiny-rpc-core/pom.xml
+  s_7011714e525495::t_befb2c69f0c4f7 1-7
+Consumer/pom.xml
+  s_7011714e525495::t_7a91f692097383 21-24
+tiny-rpc-netty/src/main/java/io/smarthome/tinyrpc/netty/TinyRpcServer.java
+  s_7011714e525495::t_eb15ae25061dac 1-131
+tiny-rpc-codec/pom.xml
+  s_7011714e525495::t_de5157143e2d2a 1-11
+tiny-rpc-core/src/main/java/io/smarthome/tinyrpc/core/RpcResult.java
+  s_7011714e525495::t_befb2c69f0c4f7 1-44
+tiny-rpc-core/src/main/java/io/smarthome/tinyrpc/core/ServiceRegistry.java
+  s_7011714e525495::t_befb2c69f0c4f7 1-24
+Provider/pom.xml
+  s_7011714e525495::t_7a91f692097383 20-23
+tiny-rpc-codec/src/main/java/io/smarthome/tinyrpc/codec/JsonLineCodec.java
+  s_7011714e525495::t_de5157143e2d2a 1-54
+tiny-rpc-netty/src/test/java/io/smarthome/tinyrpc/netty/TinyRpcLoopbackTest.java
+  s_7011714e525495::t_a2b3d51b4b38bf 1-15,17-25,27,32-45,50-71,76-97
+  s_7011714e525495::t_4d1f43adefc4cb 16,26,28-31,46,72-75
+  s_7011714e525495::t_7a91f692097383 47-49
+tiny-rpc-telemetry/src/main/java/io/smarthome/tinyrpc/telemetry/TransportObservation.java
+  s_7011714e525495::t_de5157143e2d2a 1-30
+tiny-rpc-core/src/main/java/io/smarthome/tinyrpc/core/RpcRequest.java
+  s_7011714e525495::t_befb2c69f0c4f7 1-57
+tiny-rpc-spring-adapter/src/main/java/io/smarthome/tinyrpc/spring/SpringServiceRegistrar.java
+  s_7011714e525495::t_a7e1b10414d215 1-42
+tiny-rpc-netty/src/main/java/io/smarthome/tinyrpc/netty/TinyRpcClient.java
+  s_7011714e525495::t_b3d7bf667d6849 40,73,78,83,88,94,98-101,104,120-134,145-146
+  s_7011714e525495::t_eb15ae25061dac 1-39,41-72,74-77,79-82,84-87,89-93,95-97,102-103,105-119,135-144,147-153
+tiny-rpc-codec/src/main/java/io/smarthome/tinyrpc/codec/FrameLimitException.java
+  s_7011714e525495::t_de5157143e2d2a 1-7
+pom.xml
+  s_7011714e525495::t_befb2c69f0c4f7 22-25,27,31-50
+  s_7011714e525495::t_a7e1b10414d215 26
+tiny-rpc-netty/pom.xml
+  s_7011714e525495::t_eb15ae25061dac 1-13
+tiny-rpc-core/src/main/java/io/smarthome/tinyrpc/core/RpcLimits.java
+  s_7011714e525495::t_befb2c69f0c4f7 1-33
+tiny-rpc-telemetry/pom.xml
+  s_7011714e525495::t_de5157143e2d2a 1-6
+examples/pom.xml
+  s_7011714e525495::t_a2b3d51b4b38bf 1-12
+tiny-rpc-telemetry/src/main/java/io/smarthome/tinyrpc/telemetry/TelemetryListener.java
+  s_7011714e525495::t_de5157143e2d2a 1-7
+examples/src/main/java/io/smarthome/tinyrpc/example/CommunicationDemo.java
+  s_7011714e525495::t_a2b3d51b4b38bf 1-39
+tiny-rpc-spring-adapter/pom.xml
+  s_7011714e525495::t_a7e1b10414d215 1-11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "0f1d7b8e453790f0b46ebf1dd54bdd318c21bb31",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
