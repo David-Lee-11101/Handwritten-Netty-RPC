@@ -1,0 +1,24 @@
+benchmarks/run-legacy.sh
+  s_7011714e525495::t_f13d41d994f7a4 23-26,28-31
+  s_7011714e525495::t_8fd4d1eb5e50fb 8,27
+benchmarks/measure-structure.mjs
+  s_7011714e525495::t_f13d41d994f7a4 1-24
+benchmarks/analyze-baseline.mjs
+  s_7011714e525495::t_f13d41d994f7a4 4-6,42,55-58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "5c49f1176ab5e088d322593d765d4e0c03682809",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "恺撒 <weihaodong@xiaohongshu.com>"
+    }
+  }
+}
