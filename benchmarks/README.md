@@ -12,3 +12,5 @@ The benchmark compares the untouched legacy JSON-line implementation with the Sp
 
 The acceptance envelope is frozen in `benchmarks/acceptance-envelope.json` before runtime optimization. Results describe this loopback benchmark on the recorded host; they are not universal hardware claims.
 
+The structural report keeps three quantities distinct: the JDK-only core JAR, the sum of the four Spring-free TinyRPC JARs, and the full runtime dependency closure. The frozen artifact gate compares the new core JAR with the combined legacy application JARs; it does not present the core-only result as the size of the complete distribution.
+

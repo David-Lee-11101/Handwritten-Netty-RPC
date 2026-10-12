@@ -12,17 +12,20 @@ if [[ "$run_count" -lt 10 ]]; then echo "BENCHMARK_RUNS must be at least 10" >&2
 cd "$repository_root"
 export JAVA_HOME="$java_home_override"
 export PATH="$JAVA_HOME/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-/usr/local/apache-maven-3.9.9/bin/mvn -q -s "$maven_settings" -DskipTests install
+/usr/local/apache-maven-3.9.9/bin/mvn -q -s "$maven_settings" -DskipTests clean install
 /usr/local/apache-maven-3.9.9/bin/mvn -q -s "$maven_settings" -pl tiny-rpc-netty -DskipTests test-compile \
   dependency:build-classpath -Dmdep.includeScope=test \
   -Dmdep.outputFile="$repository_root/tiny-rpc-netty/target/benchmark-classpath.txt"
 /usr/local/apache-maven-3.9.9/bin/mvn -q -s "$maven_settings" -pl tiny-rpc-netty -DskipTests \
-  dependency:build-classpath -Dmdep.includeScope=runtime \
-  -Dmdep.outputFile="$repository_root/tiny-rpc-netty/target/runtime-classpath.txt"
+  dependency:copy-dependencies -DincludeScope=runtime \
+  -DoutputDirectory="$repository_root/tiny-rpc-netty/target/runtime-dependencies"
 "$node_binary" "$repository_root/benchmarks/measure-structure.mjs" \
-  "$repository_root/tiny-rpc-netty/target/runtime-classpath.txt" \
+  "$repository_root/tiny-rpc-netty/target/runtime-dependencies" \
   "$repository_root/benchmarks/current-structure.json" \
-  "$repository_root/tiny-rpc-core/target/tiny-rpc-core-0.0.1-SNAPSHOT.jar"
+  "$repository_root/tiny-rpc-core/target/tiny-rpc-core-0.0.1-SNAPSHOT.jar" \
+  "$repository_root/tiny-rpc-codec/target/tiny-rpc-codec-0.0.1-SNAPSHOT.jar" \
+  "$repository_root/tiny-rpc-telemetry/target/tiny-rpc-telemetry-0.0.1-SNAPSHOT.jar" \
+  "$repository_root/tiny-rpc-netty/target/tiny-rpc-netty-0.0.1-SNAPSHOT.jar"
 classpath="$repository_root/tiny-rpc-netty/target/test-classes:$repository_root/tiny-rpc-netty/target/classes:$(tr -d '\r\n' < "$repository_root/tiny-rpc-netty/target/benchmark-classpath.txt")"
 temporary_file="$(mktemp "${TMPDIR:-/tmp}/tiny-rpc-current.XXXXXX")"
 trap 'rm -f "$temporary_file"' EXIT

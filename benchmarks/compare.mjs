@@ -43,7 +43,7 @@ const checks = {
   idleRssImproved: metrics.idleRssBytes.upper95 < 0,
   startupNonInferior: metrics.startupNanos.upper95 <= envelope.frozenMargins.startupNanos,
   latencyNonInferior: metrics.p95LatencyNanos.upper95 <= envelope.frozenMargins.p95LatencyNanos,
-  coreArtifactSmaller: structure.combinedArtifactBytes < envelope.baselineStructure.combinedArtifactBytes,
+  coreArtifactSmaller: structure.coreArtifactBytes < envelope.baselineStructure.combinedArtifactBytes,
   runtimeClosureSmaller: structure.runtimeDependencyClosureBytes < envelope.baselineStructure.runtimeDependencyClosureBytes,
   springFreeCoreRuntime: structure.dependencies.every((entry) => !entry.file.toLowerCase().includes('spring'))
 };
