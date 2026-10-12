@@ -73,7 +73,9 @@ public class TinyRpcAdversarialTest {
             }, "deterministic-timeout-test-peer");
             peer.start();
             try (TinyRpcClient client = TinyRpcClient.connect("127.0.0.1", listener.getLocalPort(), limits, null)) {
-                assertTimeout(client.invoke(request("request-remote-deadline", "guard.service", "late", "[]", 5000)));
+                CompletableFuture<RpcResult> remoteDeadline = client.invoke(request("request-remote-deadline", "guard.service", "late", "[]", 5000));
+                assertTimeout(remoteDeadline);
+                assertTrue("Expected the forced remote timeout result", !remoteDeadline.isCompletedExceptionally());
                 CompletableFuture<RpcResult> timedOut = client.invoke(request("request-local-deadline", "guard.service", "late", "[]", 200));
                 assertTimeout(timedOut);
                 assertTrue(timedOut.isCompletedExceptionally()); assertEquals(0, client.pendingCount());
