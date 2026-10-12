@@ -1,7 +1,9 @@
 benchmarks/analyze-baseline.mjs
   s_7011714e525495::t_7e6b985b0829fc 1-57
+  s_7011714e525495::t_db070a3a9395fe 1-57
 benchmarks/run-legacy.sh
   s_7011714e525495::t_bf23666dde21c2 1-41
+  s_7011714e525495::t_db070a3a9395fe 1-41
 ---
 {
   "schema_version": "authorship/3.0.0",
