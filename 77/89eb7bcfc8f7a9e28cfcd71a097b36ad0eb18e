@@ -1,0 +1,23 @@
+Consumer/src/test/java/com/seclab/nettyClient/LegacyBenchmarkMain.java
+  s_7011714e525495::t_49be0f073b5c61 1-172
+benchmarks/README.md
+  s_7011714e525495::t_1c441d6de11482 1-14
+docs/CLEANUP_PLAN.md
+  s_7011714e525495::t_f86874774e1dfa 1-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "7789eb7bcfc8f7a9e28cfcd71a097b36ad0eb18e",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
