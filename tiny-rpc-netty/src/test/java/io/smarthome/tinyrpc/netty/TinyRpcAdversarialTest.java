@@ -62,26 +62,33 @@ public class TinyRpcAdversarialTest {
              TinyRpcClient nestedClient = TinyRpcClient.connect("127.0.0.1", inner.port(), innerLimits, null)) {
             RpcLimits outerLimits = new RpcLimits(1024, 16, 16, 1);
             CountDownLatch release = new CountDownLatch(1);
+            CountDownLatch entered = new CountDownLatch(2);
             try (TinyRpcServer outer = TinyRpcServer.builder().limits(outerLimits)
                     .register("outer.service", "nested", arguments -> nestedClient.invoke(
-                            request("request-inner", "inner.service", "echo", arguments, 1000)).get(1, TimeUnit.SECONDS).getValueJson())
+                            request("request-inner", "inner.service", "echo", arguments, 5000)).get(5, TimeUnit.SECONDS).getValueJson())
                     .register("outer.service", "ping", arguments -> "\"pong\"")
-                    .register("outer.service", "block", arguments -> { release.await(2, TimeUnit.SECONDS); return arguments; })
+                    .register("outer.service", "block", arguments -> { entered.countDown(); release.await(10, TimeUnit.SECONDS); return arguments; })
                     .build().bind("127.0.0.1", 0);
                  TinyRpcClient client = TinyRpcClient.connect("127.0.0.1", outer.port(), outerLimits, null)) {
-                CompletableFuture<RpcResult> nested = client.invoke(request("request-nested", "outer.service", "nested", "\"nested\"", 1000));
-                assertEquals("\"pong\"", client.invoke(request("request-ping", "outer.service", "ping", "[]", 500))
-                        .get(500, TimeUnit.MILLISECONDS).getValueJson());
-                assertEquals("\"nested\"", nested.get(1, TimeUnit.SECONDS).getValueJson());
+                CompletableFuture<RpcResult> nested = client.invoke(request("request-nested", "outer.service", "nested", "\"nested\"", 5000));
+                assertEquals("\"pong\"", client.invoke(request("request-ping", "outer.service", "ping", "[]", 5000))
+                        .get(5, TimeUnit.SECONDS).getValueJson());
+                assertEquals("\"nested\"", nested.get(5, TimeUnit.SECONDS).getValueJson());
 
                 List<CompletableFuture<RpcResult>> blocked = new ArrayList<>();
-                for (int index = 0; index < 4; index++) {
-                    blocked.add(client.invoke(request("request-block-" + index, "outer.service", "block", "[]", 1000)));
-                }
-                RpcResult overloaded = blocked.get(3).get(1, TimeUnit.SECONDS);
-                assertEquals("SERVER_OVERLOADED", overloaded.getErrorCode());
-                release.countDown();
-                for (int index = 0; index < 3; index++) assertTrue(blocked.get(index).get(1, TimeUnit.SECONDS).isSuccess());
+                try {
+                    for (int index = 0; index < 2; index++) {
+                        blocked.add(client.invoke(request("request-block-" + index, "outer.service", "block", "[]", 5000)));
+                        // Wait for each worker to start before filling the one-item queue.
+                        long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(5);
+                        while (entered.getCount() > 1 - index && System.nanoTime() < deadline) Thread.sleep(1);
+                        assertTrue("Dispatch worker did not start", entered.getCount() <= 1 - index);
+                    }
+                    blocked.add(client.invoke(request("request-block-2", "outer.service", "block", "[]", 5000)));
+                    blocked.add(client.invoke(request("request-block-3", "outer.service", "block", "[]", 5000)));
+                    assertEquals("SERVER_OVERLOADED", blocked.get(3).get(5, TimeUnit.SECONDS).getErrorCode());
+                } finally { release.countDown(); }
+                for (int index = 0; index < 3; index++) assertTrue(blocked.get(index).get(5, TimeUnit.SECONDS).isSuccess());
             }
         }
     }

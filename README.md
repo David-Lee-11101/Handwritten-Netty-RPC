@@ -43,6 +43,7 @@ sequenceDiagram
 - Frame bytes, pending requests, queued writes, and provider work are bounded.
 - Provider callbacks execute on a bounded dispatch pool, outside Netty event-loop threads.
 - Timeout, cancellation, write failure, malformed input, peer disconnect, and owned shutdown clear correlation state.
+- Optional telemetry listener failures preserve transport outcomes and increment `telemetryFailureCount()` on the client/server. Required integration evidence must reject incomplete traces; a successful RPC alone cannot prove instrumentation.
 - Telemetry records correlation IDs, direction, encoded frame length, and a session-relative monotonic offset. It contains no payload, arguments, result, credential, endpoint, or private path.
 - The codec rejects unknown wrapper fields, special JSON keys, invalid result states, and unsupported protocol versions.
 
@@ -82,7 +83,7 @@ mvn --batch-mode --no-transfer-progress test
 
 The suite exercises 2,000 sequential calls, 24 concurrent calls, reordered replies, pending/write/work limits, timeout/cancel/late-response cleanup, malformed and oversized frames, peer isolation, nested invocation responsiveness, repeated owned shutdown, strict JSON parsing, and telemetry observer failure.
 
-The performance gate is frozen in [`benchmarks/acceptance-envelope-v2.json`](benchmarks/acceptance-envelope-v2.json). It compares 12 matched fresh-process runs against the untouched implementation with fixed JVM flags and a fixed-seed bootstrap. No footprint or latency improvement is claimed until the post-change measurements satisfy that predeclared gate. Core artifact size and complete runtime dependency closure are reported separately.
+The thresholds are frozen in [`benchmarks/acceptance-envelope-v2.json`](benchmarks/acceptance-envelope-v2.json); the corrected measurement method is documented in [`benchmarks/METROLOGY_V3.md`](benchmarks/METROLOGY_V3.md). It compares 12 matched fresh-process runs against the untouched implementation with fixed JVM flags and a fixed-seed bootstrap. The [first formal v3.1 attempt](benchmarks/v3-attempt-1/README.md) passed resource and structural gates but **failed the p95 latency gate**: the upper 95% bound was 109,875 ns against the unchanged 76,020.5 ns margin. The overall performance requirement remains unresolved. Core artifact size and complete runtime dependency closure are reported separately, and these measurements apply only to the exact candidate and environment recorded in that attempt.
 
 ## Research provenance
 

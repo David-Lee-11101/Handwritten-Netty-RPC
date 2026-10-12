@@ -39,6 +39,7 @@ public final class TinyRpcClient implements Closeable {
     private final Map<String, PendingCall> pending = new ConcurrentHashMap<>();
     private final AtomicInteger pendingReservations = new AtomicInteger();
     private final AtomicInteger queuedWrites = new AtomicInteger();
+    private final java.util.concurrent.atomic.AtomicLong telemetryFailures = new java.util.concurrent.atomic.AtomicLong();
     private final AtomicBoolean closed = new AtomicBoolean();
     private final long monotonicOrigin = System.nanoTime();
     private final Channel channel;
@@ -127,6 +128,7 @@ public final class TinyRpcClient implements Closeable {
 
     public int pendingCount() { return pending.size(); }
     public int queuedWriteCount() { return queuedWrites.get(); }
+    public long telemetryFailureCount() { return telemetryFailures.get(); }
 
     @Override public void close() {
         if (!closed.compareAndSet(false, true)) return;
@@ -163,7 +165,7 @@ public final class TinyRpcClient implements Closeable {
     }
 
     private void observe(TransportObservation observation) {
-        try { telemetry.onObservation(observation); } catch (RuntimeException ignored) { }
+        try { telemetry.onObservation(observation); } catch (RuntimeException observerFailure) { telemetryFailures.incrementAndGet(); }
     }
 
     private final class ResultHandler extends SimpleChannelInboundHandler<ByteBuf> {

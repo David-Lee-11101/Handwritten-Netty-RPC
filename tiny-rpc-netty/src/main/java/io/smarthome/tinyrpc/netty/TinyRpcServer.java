@@ -40,6 +40,7 @@ public final class TinyRpcServer implements Closeable {
     private final ThreadPoolExecutor dispatch;
     private final long monotonicOrigin = System.nanoTime();
     private final AtomicBoolean closed = new AtomicBoolean();
+    private final java.util.concurrent.atomic.AtomicLong telemetryFailures = new java.util.concurrent.atomic.AtomicLong();
     private Channel channel;
 
     private TinyRpcServer(Builder builder) {
@@ -64,6 +65,7 @@ public final class TinyRpcServer implements Closeable {
     }
 
     public int port() { return ((InetSocketAddress) channel.localAddress()).getPort(); }
+    public long telemetryFailureCount() { return telemetryFailures.get(); }
 
     @Override public void close() {
         if (!closed.compareAndSet(false, true)) return;
@@ -119,7 +121,7 @@ public final class TinyRpcServer implements Closeable {
 
     private static long elapsedMs(long started) { return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - started); }
     private void observe(TransportObservation observation) {
-        try { telemetry.onObservation(observation); } catch (RuntimeException ignored) { }
+        try { telemetry.onObservation(observation); } catch (RuntimeException observerFailure) { telemetryFailures.incrementAndGet(); }
     }
 
     public static final class Builder {

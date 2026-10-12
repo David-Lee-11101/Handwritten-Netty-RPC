@@ -5,12 +5,10 @@ import com.seclab.model.ResponseModel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import lombok.extern.slf4j.Slf4j;
 
-
-@Slf4j
 @ChannelHandler.Sharable
 public class ClientHandler extends SimpleChannelInboundHandler<String> {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClientHandler.class);
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, String msg) {
@@ -41,4 +39,3 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
         ctx.close();
     }
 }
-

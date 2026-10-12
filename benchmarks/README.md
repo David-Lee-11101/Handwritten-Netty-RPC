@@ -1,6 +1,6 @@
 # Communication benchmark protocol
 
-The benchmark compares the legacy JSON-line implementation with the Spring-free TinyRPC runtime on the same machine and fixed Java runtime. The executable v3.1 protocol is frozen in [`METROLOGY_V3.md`](METROLOGY_V3.md) and is awaiting independent approval; no v3.1 performance samples have been collected.
+The benchmark compares the legacy JSON-line implementation with the Spring-free TinyRPC runtime on the same machine and fixed Java runtime. The executable v3.1 protocol is frozen in [`METROLOGY_V3.md`](METROLOGY_V3.md). Its first formal attempt is preserved in [`v3-attempt-1`](v3-attempt-1/README.md): all 12 pairs completed, but the overall gate **failed** because the p95 latency upper confidence bound was 109,875 ns, exceeding the unchanged 76,020.5 ns margin. Memory, RSS, startup, and structural gates passed for that measured candidate. This does not establish a passing performance gate for later commits.
 
 - Warm-up calls per process: 200
 - Measured loopback calls per process: 1,000
