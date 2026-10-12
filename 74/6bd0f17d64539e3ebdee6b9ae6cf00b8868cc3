@@ -1,0 +1,25 @@
+benchmarks/acceptance-envelope.json
+  s_7011714e525495::t_ce9136a9d9eed4 1-256
+benchmarks/baseline-runs.jsonl
+  s_7011714e525495::t_775ee5cd4b96de 1-12
+benchmarks/baseline-structure.json
+  s_7011714e525495::t_3a86b5923e345e 1-174
+benchmarks/measurement-environment.json
+  s_7011714e525495::t_59336637ecb133 1-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "746bd0f17d64539e3ebdee6b9ae6cf00b8868cc3",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
