@@ -1,0 +1,24 @@
+tiny-rpc-codec/src/main/java/io/smarthome/tinyrpc/codec/FlatJsonObject.java
+  s_7011714e525495::t_d3152a48959b54 1-175
+tiny-rpc-codec/src/main/java/io/smarthome/tinyrpc/codec/JsonLineCodec.java
+  s_7011714e525495::t_4b3d1347306153 7-9,11-12,14,23,28,33,40,44,56,68-69,72,76-77,80-81,83-84,101-108
+tiny-rpc-codec/src/test/java/io/smarthome/tinyrpc/codec/JsonLineCodecTest.java
+  s_7011714e525495::t_de0d6138a4828d 31
+  s_7011714e525495::t_4ed1076ea6c07c 59-65
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "ecb24f3bbd78d08f0e84027d5ff3acaaf620c514",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
