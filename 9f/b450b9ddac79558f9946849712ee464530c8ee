@@ -1,0 +1,49 @@
+benchmarks/v3/verify-identities.mjs
+  s_7011714e525495::t_b2f564fbb46996 1-17
+  s_7011714e525495::t_6e8c5901093e52 18-19
+  s_7011714e525495::t_d88aac33f071b9 20-24
+benchmarks/v3/environment.mjs
+  s_7011714e525495::t_b2f564fbb46996 1-14
+benchmarks/v3/analyze.test.mjs
+  s_7011714e525495::t_40bd7660ac67ce 1-78
+benchmarks/v3/freeze-identities.mjs
+  s_7011714e525495::t_b908667faa4d3a 16-20
+  s_7011714e525495::t_40bd7660ac67ce 1-15,21-43
+benchmarks/v3/runtime-manifest.mjs
+  s_7011714e525495::t_d88aac33f071b9 1-16
+benchmarks/v3/prepare-exact-roots.sh
+  s_7011714e525495::t_d88aac33f071b9 1-45
+benchmarks/v3/attempt-lineage.json
+  s_7011714e525495::t_6e8c5901093e52 1-19
+benchmarks/v3/run-paired.sh
+  s_7011714e525495::t_6e8c5901093e52 15,33,58-59,62-63
+  s_7011714e525495::t_b2f564fbb46996 1-14,16-32,34,38,44,51-57,60-61,64-66
+  s_7011714e525495::t_b908667faa4d3a 35-37,39-43,45-50
+Consumer/src/test/java/com/seclab/nettyClient/LegacyBenchmarkMain.java
+  s_7011714e525495::t_b7085c84f1a939 36,76-77,106,172-204
+benchmarks/v3/record-run.mjs
+  s_7011714e525495::t_b2f564fbb46996 1-6,9-12,14-19
+  s_7011714e525495::t_6e8c5901093e52 7-8,13
+tiny-rpc-netty/src/test/java/io/smarthome/tinyrpc/netty/TinyRpcBenchmarkMain.java
+  s_7011714e525495::t_38234b8a8dce79 7,26,30-31,42,54,68-73,96-134
+  s_7011714e525495::t_1ad656d7ceac62 135
+benchmarks/v3/analyze.mjs
+  s_7011714e525495::t_d88aac33f071b9 2,11-13,30-32
+  s_7011714e525495::t_6e8c5901093e52 1,3-10,14-29,33-126
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "9fb450b9ddac79558f9946849712ee464530c8ee",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
