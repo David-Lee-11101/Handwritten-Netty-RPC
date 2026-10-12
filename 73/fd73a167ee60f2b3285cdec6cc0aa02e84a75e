@@ -1,0 +1,65 @@
+benchmarks/v3-attempt-1/run-01-legacy.stdout.log
+  s_7011714e525495::t_d43f0a6db34967 1-1259
+benchmarks/v3-attempt-1/run-02-candidate.stdout.log
+  s_7011714e525495::t_8924a38cbfa52a 1
+benchmarks/v3-attempt-1/run-03-candidate.stdout.log
+  s_7011714e525495::t_aa64f445c535ef 1
+benchmarks/v3-attempt-1/run-04-legacy.stdout.log
+  s_7011714e525495::t_5fec97e64e2b86 1-1259
+benchmarks/v3-attempt-1/run-05-legacy.stdout.log
+  s_7011714e525495::t_e8d521148253e3 1-1259
+benchmarks/v3-attempt-1/run-06-candidate.stdout.log
+  s_7011714e525495::t_ec28d002fcf84d 1
+benchmarks/v3-attempt-1/run-07-candidate.stdout.log
+  s_7011714e525495::t_6a91604588fa42 1
+benchmarks/v3-attempt-1/run-08-legacy.stdout.log
+  s_7011714e525495::t_c347af82939aaf 1-1259
+benchmarks/v3-attempt-1/run-09-legacy.stdout.log
+  s_7011714e525495::t_6fbedce6f43deb 1-1259
+benchmarks/v3-attempt-1/run-10-candidate.stdout.log
+  s_7011714e525495::t_282b0d6c26e99e 1
+benchmarks/v3-attempt-1/run-11-candidate.stdout.log
+  s_7011714e525495::t_11151b34c3c4d3 1
+benchmarks/v3-attempt-1/run-12-legacy.stdout.log
+  s_7011714e525495::t_d057736f023e5b 1-1259
+benchmarks/v3-attempt-1/run-13-legacy.stdout.log
+  s_7011714e525495::t_24f09d14a93e4d 1-1259
+benchmarks/v3-attempt-1/run-14-candidate.stdout.log
+  s_7011714e525495::t_6e96fa3db7d385 1
+benchmarks/v3-attempt-1/run-15-candidate.stdout.log
+  s_7011714e525495::t_60552a3bfa39e4 1
+benchmarks/v3-attempt-1/run-16-legacy.stdout.log
+  s_7011714e525495::t_0f53a27c46bda3 1-1259
+benchmarks/v3-attempt-1/run-17-legacy.stdout.log
+  s_7011714e525495::t_0573809cb2a3db 1-1259
+benchmarks/v3-attempt-1/run-18-candidate.stdout.log
+  s_7011714e525495::t_39fa700e3d5b29 1
+benchmarks/v3-attempt-1/run-19-candidate.stdout.log
+  s_7011714e525495::t_d998ea07af4d99 1
+benchmarks/v3-attempt-1/run-20-legacy.stdout.log
+  s_7011714e525495::t_bc1bede673405f 1-1259
+benchmarks/v3-attempt-1/run-21-legacy.stdout.log
+  s_7011714e525495::t_d0a2e935c0534d 1-1259
+benchmarks/v3-attempt-1/run-22-candidate.stdout.log
+  s_7011714e525495::t_1e21b3725450a2 1
+benchmarks/v3-attempt-1/run-23-candidate.stdout.log
+  s_7011714e525495::t_a378e56c6badbb 1
+benchmarks/v3-attempt-1/run-24-legacy.stdout.log
+  s_7011714e525495::t_513c78830c82a7 1-1259
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "73fd73a167ee60f2b3285cdec6cc0aa02e84a75e",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
