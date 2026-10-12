@@ -1,0 +1,19 @@
+tiny-rpc-codec/src/test/java/io/smarthome/tinyrpc/codec/JsonLineCodecTest.java
+  s_7011714e525495::t_b0ea189acbe655 64-65
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "05a6b3e95d745b8dacbefa69e5b3f5fc2575e060",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
