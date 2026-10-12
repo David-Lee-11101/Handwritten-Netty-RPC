@@ -1,0 +1,23 @@
+benchmarks/METROLOGY_V3.md
+  s_7011714e525495::t_b19f15eec06c22 5
+benchmarks/metrology-v3-proposal.json
+  s_7011714e525495::t_b19f15eec06c22 15,18,60
+benchmarks/v3/identities.json
+  s_7011714e525495::t_2e138718f65262 5,10,12,14-15,32,34-41,45,59-68
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "157a0101fe43699c52440439f5a9440079734d82",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
