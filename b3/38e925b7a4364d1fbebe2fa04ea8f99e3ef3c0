@@ -1,0 +1,23 @@
+Consumer/src/test/java/com/seclab/nettyClient/LegacyBenchmarkMain.java
+  s_7011714e525495::t_5b0f507bd5bbbd 41-42
+benchmarks/metrology-v3-proposal.json
+  s_7011714e525495::t_9aa41585cf2537 1-68
+benchmarks/METROLOGY_V3.md
+  s_7011714e525495::t_9aa41585cf2537 1-11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "b338e925b7a4364d1fbebe2fa04ea8f99e3ef3c0",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
