@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "3.1.0",
+  "protocolId": "tiny-rpc-metrology-v3.1-abba",
+  "coordinator": {
+    "commit": "9fb450b9ddac79558f9946849712ee464530c8ee",
+    "files": {
+      "benchmarks/v3/analyze.mjs": "e203c3fd98bfb0fdcd2e677829414d251e0a61fe69e3892ee4442e9337470bb9",
+      "benchmarks/v3/attempt-lineage.json": "11cf7a4fe6d666119c6cd7560387cd069f4b38a89b74e8d95813e35f0eb4c220",
+      "benchmarks/v3/environment.mjs": "6af14733371c66974dccc747ffe9f0b51bb869b5a173bea193387c6eed37ce44",
+      "benchmarks/v3/prepare-exact-roots.sh": "358d5d270e724533e97e2d94ad4c13fbcb8de0752c52f8c775d67d58389c991b",
+      "benchmarks/v3/record-run.mjs": "21bf9075e661629e49dc4102d988c57b0c72c3c3e6635989c800cc37cdfc9cf0",
+      "benchmarks/v3/run-paired.sh": "4b0d256fcdbc77e15d754478d57a4b408ec3c3eafe20629caeb47ce1e8a02fb7",
+      "benchmarks/v3/runtime-manifest.mjs": "ae399cacec82faf2d0c092d89fca3f5672d124e474658bca6c70d3a41791879f",
+      "benchmarks/v3/verify-identities.mjs": "f1c45dd6261b75a9fd5d83b194466e4d7f777299bcf1fbfbcbafe1a3b73079c7"
+    }
+  },
+  "legacy": {
+    "productionBaseCommit": "27779a51bfa38822922d3a57e365d2956b0546b0",
+    "commit": "a630be38072d9a96ed70ac942883972f8cb16ed8",
+    "harness": {
+      "path": "Consumer/src/test/java/com/seclab/nettyClient/LegacyBenchmarkMain.java",
+      "sha256": "bc88f7b820e852b204dd26e4bcfdd5a8dabb4ccd2926c2c769a6750466bc1815"
+    },
+    "poms": {
+      "pom.xml": "5cca43a375611535038f1af0aad9af2a2657871ba6cd904af77f9c1df1cfcd63",
+      "Consumer/pom.xml": "27fc9a9994f22a139ffe600cbcc6420555fc006ca82c08c1e5786b00e2e9ebfb",
+      "Provider/pom.xml": "ce187994b994cc1b9ce275ab2b93f811e9294e1cd8d5e6b8f02569aeb098d054"
+    },
+    "runtimeManifest": {
+      "path": "Consumer/target/v3-runtime-manifest.json",
+      "sha256": "b7c88016d1b1c435d975b33d18b58e0307df677d2d1bc8a442ded2157931142a"
+    }
+  },
+  "candidate": {
+    "commit": "9fb450b9ddac79558f9946849712ee464530c8ee",
+    "harness": {
+      "path": "tiny-rpc-netty/src/test/java/io/smarthome/tinyrpc/netty/TinyRpcBenchmarkMain.java",
+      "sha256": "a39d2703204b2cc9d9785fcfee620f407cf28bf43cba3776c0a5600b094ecb86"
+    },
+    "poms": {
+      "pom.xml": "b92efb2486194421b9deca2f116edda660df05d0d686b70dc171040ed13e3875",
+      "tiny-rpc-core/pom.xml": "0f26ca1a378db7d88cb9b51f1162604ba6d31b736be0ea966960676462f92540",
+      "tiny-rpc-codec/pom.xml": "1860d37672938bd0f998bb85e259b73ad05ad2690ddbc8e5a90d20700c867cfa",
+      "tiny-rpc-netty/pom.xml": "12b8c3ac823520ebab461382dd1f63617ba78fc58f2ce1f898636f68c40e0a68",
+      "tiny-rpc-telemetry/pom.xml": "71c7fd1f51ef6fc4b5da5e60586947dadf55a5dd6452f195dbe0e474aa887da4"
+    },
+    "runtimeManifest": {
+      "path": "tiny-rpc-netty/target/v3-runtime-manifest.json",
+      "sha256": "6a140b2e6c40c3a0ca82c833ee23dfa4c1f8e3ae453d457c4a116d032ce7a77b"
+    },
+    "structure": {
+      "path": "tiny-rpc-netty/target/v3-structure.json",
+      "sha256": "737ad7a450d967cd3f391318294243734fe1af1a3b2f8860752237311dcbf480"
+    }
+  },
+  "structuralCaps": {
+    "coreArtifactBytesExclusive": 34238,
+    "runtimeDependencyClosureBytesExclusive": 22563354,
+    "springArtifactsInCoreRuntime": 0
+  }
+}

@@ -1,68 +1,66 @@
 {
-  "schemaVersion": "3.0.0-proposal",
-  "state": "frozen-proposal-awaiting-independent-review",
-  "purpose": "Correct the asymmetric startup timer discovered after the first strict post-change run without changing any v2 evidence or relaxing any gate.",
-  "audit": {
+  "schemaVersion": "3.1.0-proposal",
+  "state": "frozen-executable-protocol-awaiting-independent-approval",
+  "protocolId": "tiny-rpc-metrology-v3.1-abba",
+  "purpose": "Correct the asymmetric startup timer found after the first strict post-change run while preserving every v2 sample, result, and numeric gate.",
+  "lineage": {
     "v2EnvelopeSha256": "af2e8bbd2a86888670681c49e4531f3820fac0548863fc70a0a73a47428d861d",
     "failedPostComparisonSha256": "7fc121f50ca4ab936c2b834546757d1cac11e1e366eb7f5cdc7c0fe4147d7c7a",
-    "finding": "The v2 legacy timer started after two implementation-owned NioEventLoopGroup constructors, while the TinyRPC timer started before its implementation-owned event-loop groups were constructed.",
-    "preservation": "All v1/v2 envelopes, runs, structures, and the failed first post-change result remain immutable and published as audit evidence.",
+    "v3LineageSha256": "11cf7a4fe6d666119c6cd7560387cd069f4b38a89b74e8d95813e35f0eb4c220",
+    "interpretation": "The timer asymmetry invalidates only the v2 cross-implementation startup interpretation. The v2 heap failure and all other preserved observations remain part of the audit record.",
     "noResultDerivedTuning": true
   },
-  "implementations": {
-    "legacyProductionSource": "public source-equivalent baseline 27779a5; apply only the reviewed v3 measurement harness",
-    "candidateProductionSource": "exact public-safe candidate commit selected after review",
-    "legacyHarnessSha256": "8ffdd3b6bbb21bc0d7d17468147e6601a554233afcbafd59950078d0a36c1f39",
-    "candidateHarnessSha256": "eb2a09dadc6f5e4e46a204c9fb1f5a3375b6fdef23b7c803ebac1bcbc493e3d7"
+  "identityManifest": {
+    "path": "benchmarks/v3/identities.json",
+    "sha256": "98220e519065435b3b8e089e29591bad8ee5539a80311a475d56dd5aa9312b79",
+    "legacyProductionBaseCommit": "27779a51bfa38822922d3a57e365d2956b0546b0",
+    "legacyMeasurementCommit": "a630be38072d9a96ed70ac942883972f8cb16ed8",
+    "candidateCommit": "9fb450b9ddac79558f9946849712ee464530c8ee"
   },
   "matchedProtocol": {
-    "freshProcessesPerImplementation": 12,
-    "pairing": "Run adjacent legacy/candidate pairs in one coordinated quiet window; alternate pair order AB then BA. Pair index is retained for bootstrap comparison.",
-    "failurePolicy": "Do not discard or replace an unfavorable completed run. A process that fails to emit a valid record invalidates the window and is reported.",
+    "pairs": 12,
+    "processesPerImplementation": 12,
+    "order": "Odd pairs run legacy-candidate; even pairs run candidate-legacy. Each pair is adjacent in one quiet window.",
+    "failurePolicy": "The attempt directory is create-only. Completed raw records and per-process stdout/stderr logs remain even when a later process fails. No unfavorable completed run is discarded or replaced.",
     "java": "Oracle Java 8u441, HotSpot 25.441-b07",
     "jvmFlags": ["-Xms64m", "-Xmx256m", "-XX:+UseSerialGC"],
-    "logicalPayloads": {
-      "readiness": "echo the string ready once",
-      "warmup": "200 sequential echo calls carrying warmup-0 through warmup-199",
-      "measurement": "1000 sequential echo calls carrying value-0 through value-999"
+    "logicalWorkload": {
+      "readiness": "One echo call carrying ready, with exact returned value validation.",
+      "warmup": "200 sequential echo calls carrying warmup-0 through warmup-199, with every returned value validated.",
+      "measurement": "1000 sequential echo calls carrying value-0 through value-999, with every returned value validated.",
+      "wireDisclosure": "The logical payload sequence is matched. Protocol envelopes differ, so actual encoded request and response frame lengths for readiness, warmup-0, and value-0 are recorded and reported for both implementations."
     },
     "startup": {
       "start": "The first statement in main, before every implementation-owned event-loop, dispatch group, server, client, or connection is constructed.",
-      "end": "Immediately after the first successful readiness RPC response is validated.",
+      "end": "Immediately after the first successful readiness RPC response is decoded and its exact echo value is validated.",
       "clock": "System.nanoTime"
     },
-    "idleMemory": {
-      "point": "After readiness and all 200 warm-up calls, followed by System.gc and a fixed 200 ms wait.",
-      "heap": "MemoryMXBean heap used bytes",
-      "rss": "ps -o rss= for the measured JVM PID, converted from KiB to bytes"
-    },
-    "latencyAndThroughput": {
-      "point": "The same 1000 sequential measured RPCs in each fresh process.",
-      "latency": "Per-call System.nanoTime delta; report p50, p95, and p99.",
-      "throughput": "1000 calls divided by the enclosing measured-loop System.nanoTime delta."
-    }
+    "idleMemory": "After readiness and all 200 validated warm-up calls, System.gc and a fixed 200 ms wait; record MemoryMXBean heap used bytes and ps RSS bytes.",
+    "latencyAndThroughput": "The same 1000 validated sequential measured RPCs; per-call System.nanoTime latency and one enclosing measured-loop throughput interval."
   },
   "statistics": {
-    "bootstrap": {
-      "seed": 20261012,
-      "confidence": 0.95,
-      "resamples": 10000,
-      "statistic": "matched-pair median difference"
-    },
+    "bootstrap": {"seed": 20261012, "confidence": 0.95, "resamples": 10000, "statistic": "matched-pair median difference"},
+    "ordering": "Validate metadata and workload markers, compute fresh legacy summaries and capped margins, then read candidate metric values and compute paired differences.",
     "clockResolutionUpperBoundNanos": 84,
-    "memoryPass": "upper95CI(candidate-minus-legacy)<0 for both idle heap and idle RSS",
+    "memoryPass": "upper95CI(candidate-minus-legacy)<0 for idle heap and idle RSS",
     "startupMarginNanos": "min(9823021.5, max(84, freshLegacyStartupP95-freshLegacyStartupMedian))",
     "p95LatencyMarginNanos": "min(76020.5, max(84, freshLegacyP95LatencyP95-freshLegacyP95LatencyMedian))",
-    "startupPass": "upper95CI(candidate-minus-legacy)<=startupMarginNanos",
-    "p95LatencyPass": "upper95CI(candidate-minus-legacy)<=p95LatencyMarginNanos",
-    "marginCap": "Neither v3 non-inferiority margin may exceed the stricter frozen v2 value."
+    "nonInferiorityPass": "upper95CI(candidate-minus-legacy)<=the corresponding capped margin"
   },
   "structuralGates": {
-    "baselineDependencies": "Fresh dependency:copy-dependencies with includeScope=runtime; exclude test-scoped artifacts.",
-    "candidateCoreArtifactBytes": "strictly less than the two legacy application JARs combined",
-    "candidateRuntimeDependencyClosureBytes": "strictly less than the unique legacy runtime-only dependency closure",
+    "candidateCoreArtifactBytesExclusive": 34238,
+    "candidateRuntimeDependencyClosureBytesExclusive": 22563354,
     "springArtifactsInCandidateCoreRuntime": 0,
-    "reportSeparately": ["JDK-only core JAR", "four-module Spring-free distribution", "runtime dependency closure"]
+    "dependencyMethod": "Fresh dependency:copy-dependencies with includeScope=runtime. Test-scoped JUnit and Hamcrest are excluded.",
+    "reportSeparately": ["JDK-only core JAR", "four-module Spring-free distribution", "runtime dependency closure"],
+    "claimBoundary": "The core-only comparison is not presented as a reduction of the complete distribution."
   },
-  "publicationGate": "No low-footprint, startup, or latency improvement claim is permitted until independent method review passes and every v3 runtime and structural gate passes on the exact candidate source."
+  "executableEvidence": {
+    "preparation": "benchmarks/v3/prepare-exact-roots.sh",
+    "identityVerification": "benchmarks/v3/verify-identities.mjs",
+    "pairedCoordinator": "benchmarks/v3/run-paired.sh",
+    "analyzer": "benchmarks/v3/analyze.mjs",
+    "analyzerRegression": "node --test benchmarks/v3/analyze.test.mjs"
+  },
+  "publicationGate": "No low-footprint, startup, latency, or memory improvement claim is permitted until an independent reviewer approves v3.1 and every runtime and structural gate passes on the frozen candidate identity."
 }

@@ -66,11 +66,13 @@ test('accepts exactly twelve complete alternating matched pairs', () => {
   assert.equal(report.structure.coreArtifactBytes, 7000);
 });
 
-test('rejects missing, reordered, and wrong-identity records', () => {
-  for (const mutation of ['missing', 'reordered', 'identity']) {
+test('rejects missing, duplicate, reordered, cross-environment, and wrong-identity records', () => {
+  for (const mutation of ['missing', 'duplicate', 'reordered', 'environment', 'identity']) {
     const f = fixture(); const records = structuredClone(f.records);
     if (mutation === 'missing') records.pop();
+    if (mutation === 'duplicate') records[1] = structuredClone(records[0]);
     if (mutation === 'reordered') [records[0], records[1]] = [records[1], records[0]];
+    if (mutation === 'environment') records[7].environmentId = 'f'.repeat(64);
     if (mutation === 'identity') records[5].sourceCommit = commit('f');
     const { result, outputPath } = execute(f, records, mutation);
     assert.notEqual(result.status, 0); assert.equal(fs.existsSync(outputPath), false);
