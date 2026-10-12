@@ -33,6 +33,7 @@ import java.util.concurrent.TimeUnit;
 public final class LegacyBenchmarkMain {
     private static final int WARMUP_CALLS = 200;
     private static final int MEASURED_CALLS = 1000;
+    private static final FrameAudit FRAME_AUDIT = new FrameAudit();
 
     private LegacyBenchmarkMain() {
     }
@@ -72,7 +73,8 @@ public final class LegacyBenchmarkMain {
             long startupNanos = System.nanoTime() - processStart;
 
             for (int index = 0; index < WARMUP_CALLS; index++) {
-                client.echo("warmup-" + index);
+                String expected = "warmup-" + index;
+                if (!expected.equals(client.echo(expected))) throw new IllegalStateException("Unexpected warm-up response");
             }
 
             System.gc();
@@ -101,6 +103,7 @@ public final class LegacyBenchmarkMain {
                     + "\"idleHeapBytes\":" + heapBytes + ','
                     + "\"idleRssBytes\":" + rssBytes + ','
                     + "\"measuredCalls\":" + MEASURED_CALLS + ','
+                    + FRAME_AUDIT.jsonFields()
                     + "\"p50LatencyNanos\":" + percentile(latencyNanos, 0.50) + ','
                     + "\"p95LatencyNanos\":" + percentile(latencyNanos, 0.95) + ','
                     + "\"p99LatencyNanos\":" + percentile(latencyNanos, 0.99) + ','
@@ -166,7 +169,39 @@ public final class LegacyBenchmarkMain {
             ResponseModel response = new ResponseModel(
                     request.getRequestId(), request.getServiceName(), request.getMethodName(),
                     "200", JSON.toJSONString(result));
-            context.writeAndFlush(JSON.toJSONString(response) + "\n");
+            String responseFrame = JSON.toJSONString(response) + "\n";
+            FRAME_AUDIT.capture(request, message.getBytes(CharsetUtil.UTF_8).length + 1,
+                    responseFrame.getBytes(CharsetUtil.UTF_8).length);
+            context.writeAndFlush(responseFrame);
+        }
+    }
+
+    private static final class FrameAudit {
+        private long readinessRequest = -1; private long readinessResponse = -1;
+        private long warmupRequest = -1; private long warmupResponse = -1;
+        private long measuredRequest = -1; private long measuredResponse = -1;
+
+        private synchronized void capture(RequestModel request, long requestBytes, long responseBytes) {
+            Object[] values = request.getParamValues();
+            if (values == null || values.length != 1 || !(values[0] instanceof String)) return;
+            String value = (String) values[0];
+            if ("ready".equals(value)) { readinessRequest = requestBytes; readinessResponse = responseBytes; }
+            else if ("warmup-0".equals(value)) { warmupRequest = requestBytes; warmupResponse = responseBytes; }
+            else if ("value-0".equals(value)) { measuredRequest = requestBytes; measuredResponse = responseBytes; }
+        }
+
+        private String jsonFields() {
+            if (readinessRequest < 1 || readinessResponse < 1 || warmupRequest < 1 || warmupResponse < 1
+                    || measuredRequest < 1 || measuredResponse < 1) {
+                throw new IllegalStateException("Representative frame audit is incomplete");
+            }
+            return "\"logicalEchoValidated\":true,"
+                    + "\"readinessRequestFrameBytes\":" + readinessRequest + ','
+                    + "\"readinessResponseFrameBytes\":" + readinessResponse + ','
+                    + "\"warmupRequestFrameBytes\":" + warmupRequest + ','
+                    + "\"warmupResponseFrameBytes\":" + warmupResponse + ','
+                    + "\"measuredRequestFrameBytes\":" + measuredRequest + ','
+                    + "\"measuredResponseFrameBytes\":" + measuredResponse + ',';
         }
     }
 }
