@@ -38,18 +38,64 @@ public class TinyRpcAdversarialTest {
             first.close();
             assertEquals("\"peer-two\"", second.invoke(request("request-peer", "guard.service", "echo", "\"peer-two\"", 1000))
                     .get(1, TimeUnit.SECONDS).getValueJson());
-            try {
-                second.invoke(request("request-late", "guard.service", "late", "\"late\"", 10)).get(1, TimeUnit.SECONDS);
-                throw new AssertionError("Expected timeout");
-            } catch (ExecutionException expected) {
-                assertTrue(expected.getCause() instanceof java.util.concurrent.TimeoutException);
-            }
+            assertTimeout(second.invoke(request("request-late", "guard.service", "late", "\"late\"", 10)));
             Thread.sleep(150);
             assertEquals(0, second.pendingCount());
             assertEquals("\"after-late\"", second.invoke(request("request-after", "guard.service", "echo", "\"after-late\"", 1000))
                     .get(1, TimeUnit.SECONDS).getValueJson());
             second.close();
             second.close();
+        }
+    }
+
+    @Test public void acceptsRemoteDeadlineAndIgnoresReplyAfterLocalTimeoutDeterministically() throws Exception {
+        RpcLimits limits = new RpcLimits(1024, 8, 8, 8);
+        io.smarthome.tinyrpc.codec.JsonLineCodec codec = new io.smarthome.tinyrpc.codec.JsonLineCodec(limits);
+        CountDownLatch releaseLateReply = new CountDownLatch(1);
+        CompletableFuture<Void> peerFinished = new CompletableFuture<>();
+        try (java.net.ServerSocket listener = new java.net.ServerSocket(0, 1, java.net.InetAddress.getByName("127.0.0.1"))) {
+            listener.setSoTimeout(5000);
+            Thread peer = new Thread(() -> {
+                try (Socket socket = listener.accept()) {
+                    socket.setSoTimeout(5000);
+                    java.io.BufferedReader incoming = new java.io.BufferedReader(new java.io.InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+                    RpcRequest remote = codec.decodeRequest(incoming.readLine().getBytes(StandardCharsets.UTF_8));
+                    socket.getOutputStream().write(codec.encodeResult(RpcResult.failure(remote.getRequestId(), "timeout", "DEADLINE_EXCEEDED", "Request deadline exceeded", 0)));
+                    socket.getOutputStream().flush();
+                    RpcRequest late = codec.decodeRequest(incoming.readLine().getBytes(StandardCharsets.UTF_8));
+                    if (!releaseLateReply.await(5, TimeUnit.SECONDS)) throw new AssertionError("Late-reply release did not arrive");
+                    socket.getOutputStream().write(codec.encodeResult(RpcResult.success(late.getRequestId(), "\"late\"", 0)));
+                    socket.getOutputStream().flush();
+                    RpcRequest after = codec.decodeRequest(incoming.readLine().getBytes(StandardCharsets.UTF_8));
+                    socket.getOutputStream().write(codec.encodeResult(RpcResult.success(after.getRequestId(), "\"after-late\"", 0)));
+                    socket.getOutputStream().flush(); peerFinished.complete(null);
+                } catch (Throwable failure) { peerFinished.completeExceptionally(failure); }
+            }, "deterministic-timeout-test-peer");
+            peer.start();
+            try (TinyRpcClient client = TinyRpcClient.connect("127.0.0.1", listener.getLocalPort(), limits, null)) {
+                assertTimeout(client.invoke(request("request-remote-deadline", "guard.service", "late", "[]", 5000)));
+                CompletableFuture<RpcResult> timedOut = client.invoke(request("request-local-deadline", "guard.service", "late", "[]", 200));
+                assertTimeout(timedOut);
+                assertTrue(timedOut.isCompletedExceptionally()); assertEquals(0, client.pendingCount());
+                releaseLateReply.countDown();
+                assertEquals("\"after-late\"", client.invoke(request("request-after-deterministic-late", "guard.service", "echo", "[]", 5000))
+                        .get(5, TimeUnit.SECONDS).getValueJson());
+                assertTrue(timedOut.isCompletedExceptionally()); assertEquals(0, client.pendingCount());
+                peerFinished.get(5, TimeUnit.SECONDS);
+            } finally {
+                releaseLateReply.countDown(); listener.close(); peer.join(5000);
+                assertTrue("Timeout fixture leaked its peer", !peer.isAlive());
+            }
+        }
+    }
+
+    private static void assertTimeout(CompletableFuture<RpcResult> invocation) throws Exception {
+        try {
+            RpcResult result = invocation.get(5, TimeUnit.SECONDS);
+            assertEquals("timeout", result.getStatus());
+            assertEquals("DEADLINE_EXCEEDED", result.getErrorCode());
+        } catch (ExecutionException expected) {
+            assertTrue(expected.getCause() instanceof java.util.concurrent.TimeoutException);
         }
     }
 
