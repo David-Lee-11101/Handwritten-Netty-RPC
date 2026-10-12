@@ -1,0 +1,36 @@
+tiny-rpc-netty/src/test/java/io/smarthome/tinyrpc/netty/TinyRpcLoopbackTest.java
+  s_7011714e525495::t_ea6526493a3240 90
+  s_7011714e525495::t_bef789f0f8a0aa 27,50-51,59-67
+  s_7011714e525495::t_31fd1d18c9ef86 68-69
+tiny-rpc-netty/src/main/java/io/smarthome/tinyrpc/netty/TinyRpcClient.java
+  s_7011714e525495::t_8ef1ce2c1761ec 39,50-69,86-87,93,98,100,103-110,113,115-120,122-123,138,149-150,159-162,167-172,179-185
+pom.xml
+  s_7011714e525495::t_62644fde5910b5 36,41
+tiny-rpc-netty/src/main/java/io/smarthome/tinyrpc/netty/TinyRpcServer.java
+  s_7011714e525495::t_8ef1ce2c1761ec 112,121-123
+tiny-rpc-codec/src/test/java/io/smarthome/tinyrpc/codec/JsonLineCodecTest.java
+  s_7011714e525495::t_cdb7e9f9a84591 5-6,9-10,12,32-45,47-56
+  s_7011714e525495::t_2ed7abfb01693a 46
+  s_7011714e525495::t_5e55fae47e823f 57
+tiny-rpc-core/src/main/java/io/smarthome/tinyrpc/core/RpcResult.java
+  s_7011714e525495::t_62644fde5910b5 29-44
+tiny-rpc-codec/src/main/java/io/smarthome/tinyrpc/codec/JsonLineCodec.java
+  s_7011714e525495::t_0087967f9bbb04 25-30,34-42
+  s_7011714e525495::t_62644fde5910b5 4-5,15,19-21,46-54,58-89
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "55def917ab64d78afbe8c24e0a9f02d7d79ab785",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
