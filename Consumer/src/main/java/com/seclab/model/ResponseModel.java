@@ -16,7 +16,7 @@ public class ResponseModel {
     private String code;
     private String data;
 
-    // 在构造函数中添加参数校验
+    // Validate required constructor arguments.
     public ResponseModel(String responseId, String serviceName, String methodName, String code, String data) {
         this.responseId = responseId;
         this.serviceName = serviceName;

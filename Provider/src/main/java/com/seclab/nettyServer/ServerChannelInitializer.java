@@ -25,7 +25,7 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
         this.applicationContext = applicationContext;
     }
     /**
-     * 初始化channel
+     * Initializes the channel.
      */
     @Override
     public void initChannel(SocketChannel ch) throws Exception {

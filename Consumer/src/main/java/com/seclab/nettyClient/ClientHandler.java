@@ -36,7 +36,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        log.error("发生异常", cause);
+        log.error("Channel failure", cause);
         ClientPromise.failAll(cause);
         ctx.close();
     }

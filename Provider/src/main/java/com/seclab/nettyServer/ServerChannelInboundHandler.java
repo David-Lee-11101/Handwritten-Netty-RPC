@@ -37,7 +37,7 @@ public class ServerChannelInboundHandler extends SimpleChannelInboundHandler<Str
             Class<?>[] paramTypes = result.getParamTypes();
             Object[] paramValues = result.getParamValues();
 
-            log.info("服务器接收请求: [RequestId: {}, Service: {}, Method: {}]", requestId, serviceInterfaceName, methodName);
+            log.info("Server received request: [RequestId: {}, Service: {}, Method: {}]", requestId, serviceInterfaceName, methodName);
 
             String serviceSimpleName = serviceInterfaceName.substring(serviceInterfaceName.lastIndexOf(".") + 1);
             String serviceObjectName = serviceSimpleName.substring(0, 1).toLowerCase() + serviceSimpleName.substring(1);
@@ -67,7 +67,7 @@ public class ServerChannelInboundHandler extends SimpleChannelInboundHandler<Str
     public void channelActive(ChannelHandlerContext ctx) {
         InetSocketAddress insocket = (InetSocketAddress) ctx.channel().remoteAddress();
         String clientIp = insocket.getAddress().getHostAddress();
-        log.info("客户端连接 [IP: {}]", clientIp);
+        log.info("Client connected [IP: {}]", clientIp);
     }
 
     @Override

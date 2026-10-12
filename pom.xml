@@ -12,8 +12,8 @@
     <artifactId>NettyRPCFramework</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>NettyRPCFramework</name>
-    <description>NettyRPCFramework</description>
+    <name>Smart Home Communication</name>
+    <description>A compact TinyRPC framework based on Netty</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>

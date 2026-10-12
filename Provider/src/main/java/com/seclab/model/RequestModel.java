@@ -15,7 +15,7 @@ public class RequestModel {
     private Class<?>[] paramTypes;
     private Object[] paramValues;
 
-    // 在构造函数中添加参数校验
+    // Validate required constructor arguments.
     public RequestModel(String requestId, String serviceName, String methodName, Class<?>[] paramTypes, Object[] paramValues) {
 
         this.requestId = requestId;
