@@ -61,6 +61,8 @@ public class JsonLineCodecTest {
         expectInvalid(() -> codec.decodeRequest(frame("{\"schemaVersion\":\"1.0.0\",\"schemaVersion\":\"1.0.0\"}")));
         expectInvalid(() -> codec.decodeResult(frame("{\"schemaVersion\":\"1.0.0\",\"requestId\":\"request-001\",\"status\":\"success\",\"valueJson\":\"{}\",\"durationMs\":1.5}")));
         expectInvalid(() -> codec.decodeRequest(new byte[] {'{', '"', (byte) 0xc3, (byte) 0x28, '"', ':', '0', '}'}));
+        String deeplyNestedObject = "{\"unknown\":" + repeat('{', 3000) + repeat('}', 3000) + "}";
+        expectInvalid(() -> codec.decodeRequest(frame(deeplyNestedObject)));
     }
 
     private static byte[] frame(String json) { return (json + "\n").getBytes(StandardCharsets.UTF_8); }
