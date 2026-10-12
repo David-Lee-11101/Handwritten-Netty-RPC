@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <parent><groupId>com.seclab</groupId><artifactId>NettyRPCFramework</artifactId><version>0.0.1-SNAPSHOT</version></parent>
+    <artifactId>tiny-rpc-codec</artifactId>
+    <dependencies>
+        <dependency><groupId>com.seclab</groupId><artifactId>tiny-rpc-core</artifactId><version>${project.version}</version></dependency>
+        <dependency><groupId>com.alibaba</groupId><artifactId>fastjson</artifactId></dependency>
+        <dependency><groupId>junit</groupId><artifactId>junit</artifactId><scope>test</scope></dependency>
+    </dependencies>
+</project>
