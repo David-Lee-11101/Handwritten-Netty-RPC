@@ -1,0 +1,33 @@
+tiny-rpc-core/src/main/java/io/smarthome/tinyrpc/core/ContractIdentifier.java
+  s_7011714e525495::t_8a8236b8b1a9e1 1-24
+tiny-rpc-netty/src/main/java/io/smarthome/tinyrpc/netty/TinyRpcServer.java
+  s_7011714e525495::t_b03a1c00767b45 30,36,44,90-94,97-99,101
+  s_7011714e525495::t_ddd72b78bd7a29 53,96
+  s_7011714e525495::t_3b4e8c02a5c148 27,52,54-55,77-78
+tiny-rpc-netty/src/test/java/io/smarthome/tinyrpc/netty/TinyRpcLoopbackTest.java
+  s_7011714e525495::t_a2fafe5707a9e1 173-175,180
+tiny-rpc-core/pom.xml
+  s_7011714e525495::t_8a8236b8b1a9e1 7-9
+tiny-rpc-core/src/test/java/io/smarthome/tinyrpc/core/ContractIdentifierTest.java
+  s_7011714e525495::t_8a8236b8b1a9e1 1-31
+tiny-rpc-core/src/main/java/io/smarthome/tinyrpc/core/RpcRequest.java
+  s_7011714e525495::t_8a8236b8b1a9e1 35
+tiny-rpc-core/src/main/java/io/smarthome/tinyrpc/core/RpcResult.java
+  s_7011714e525495::t_8a8236b8b1a9e1 31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "685266c18a3cc98337d923868e2571b937b26567",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
