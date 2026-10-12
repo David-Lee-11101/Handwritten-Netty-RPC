@@ -1,0 +1,25 @@
+benchmarks/measurement-environment.json
+  s_7011714e525495::t_5663622a8f0c77 1-18
+benchmarks/acceptance-envelope.json
+  s_7011714e525495::t_b52f78cc6358f6 1-256
+benchmarks/baseline-runs.jsonl
+  s_7011714e525495::t_6cd3e145798a52 1-12
+benchmarks/baseline-structure.json
+  s_7011714e525495::t_e0ab56e0c4b9a3 1-174
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "b4bc952ec0e7160ece430ece917bcf652a636467",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "恺撒 <weihaodong@xiaohongshu.com>"
+    }
+  }
+}
