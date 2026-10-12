@@ -1,0 +1,24 @@
+benchmarks/run-current.sh
+  s_7011714e525495::t_2f70ac309426be 8,19-25
+  s_7011714e525495::t_283834759e1a3e 1-7,9-18,26-39
+tiny-rpc-netty/src/test/java/io/smarthome/tinyrpc/netty/TinyRpcBenchmarkMain.java
+  s_7011714e525495::t_283834759e1a3e 1-92
+benchmarks/compare.mjs
+  s_7011714e525495::t_2f70ac309426be 1-56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "3859bb613de42668037025fdea0004112d5dcca8",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
