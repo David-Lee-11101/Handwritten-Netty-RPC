@@ -1,0 +1,22 @@
+tiny-rpc-netty/src/test/java/io/smarthome/tinyrpc/netty/TinyRpcLoopbackTest.java
+  s_7011714e525495::t_1142e4405d9aa9 14,84-116,148-151
+  s_7011714e525495::t_935dc0babdf1e1 117-139,152
+tiny-rpc-netty/src/main/java/io/smarthome/tinyrpc/netty/TinyRpcClient.java
+  s_7011714e525495::t_757190291f3453 133-134,136-140
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "213b0457320c631a92c2d100438aa9f27465ae8f",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
