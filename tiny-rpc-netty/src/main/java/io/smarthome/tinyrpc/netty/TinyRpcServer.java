@@ -45,7 +45,7 @@ public final class TinyRpcServer implements Closeable {
     private TinyRpcServer(Builder builder) {
         limits = builder.limits; registry = builder.registry; codec = new JsonLineCodec(limits);
         telemetry = builder.telemetry;
-        dispatch = new ThreadPoolExecutor(1, 2, 30, TimeUnit.SECONDS,
+        dispatch = new ThreadPoolExecutor(2, 2, 30, TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(limits.getMaxServerWorkItems()), new ThreadPoolExecutor.AbortPolicy());
     }
 
