@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "1.0.0",
+  "method": {
+    "matchedRuns": 12,
+    "warmupCallsPerRun": 200,
+    "measuredCallsPerRun": 1000,
+    "bootstrap": {
+      "seed": 20261012,
+      "confidence": 0.95,
+      "resamples": 10000,
+      "statistic": "matched-run median difference"
+    },
+    "jvmFlags": [
+      "-Xms64m",
+      "-Xmx256m",
+      "-XX:+UseSerialGC"
+    ],
+    "memoryPass": "upper95CI(new-minus-baseline)<0",
+    "nonInferiorityPass": "upper95CI(new-minus-baseline)<=frozenMarginNanos"
+  },
+  "frozenMargins": {
+    "startupNanos": 9823021.5,
+    "p95LatencyNanos": 76020.5,
+    "latencyDerivation": "max(clock p99 positive delta 84 ns, baseline cross-run p95 466708 - median 390687.5)"
+  },
+  "matchedRuns": 12,
+  "metrics": {
+    "idleHeapBytes": {
+      "medianDifference": 321716,
+      "lower95": 318860,
+      "upper95": 431668
+    },
+    "idleRssBytes": {
+      "medianDifference": -7069696,
+      "lower95": -7553024,
+      "upper95": -6627328
+    },
+    "startupNanos": {
+      "medianDifference": 51797562.5,
+      "lower95": 47001125,
+      "upper95": 54271333
+    },
+    "p95LatencyNanos": {
+      "medianDifference": 11729,
+      "lower95": -51625,
+      "upper95": 62124.5
+    },
+    "throughputPerSecond": {
+      "medianDifference": -618.0079999999998,
+      "lower95": -718.172,
+      "upper95": -227.31849999999986
+    }
+  },
+  "structure": {
+    "schemaVersion": "1.0.0",
+    "runtimeDependencyCount": 5,
+    "runtimeDependencyClosureBytes": 5155346,
+    "coreArtifactBytes": 7714,
+    "distributionArtifactBytes": 36000,
+    "combinedArtifactBytes": 36000,
+    "artifacts": [
+      {
+        "file": "tiny-rpc-codec-0.0.1-SNAPSHOT.jar",
+        "bytes": 6018
+      },
+      {
+        "file": "tiny-rpc-core-0.0.1-SNAPSHOT.jar",
+        "bytes": 7714
+      },
+      {
+        "file": "tiny-rpc-netty-0.0.1-SNAPSHOT.jar",
+        "bytes": 18710
+      },
+      {
+        "file": "tiny-rpc-telemetry-0.0.1-SNAPSHOT.jar",
+        "bytes": 3558
+      }
+    ],
+    "dependencies": [
+      {
+        "file": "fastjson-1.2.72.jar",
+        "bytes": 652606
+      },
+      {
+        "file": "netty-all-4.1.67.Final.jar",
+        "bytes": 4485450
+      },
+      {
+        "file": "tiny-rpc-codec-0.0.1-SNAPSHOT.jar",
+        "bytes": 6018
+      },
+      {
+        "file": "tiny-rpc-core-0.0.1-SNAPSHOT.jar",
+        "bytes": 7714
+      },
+      {
+        "file": "tiny-rpc-telemetry-0.0.1-SNAPSHOT.jar",
+        "bytes": 3558
+      }
+    ]
+  },
+  "checks": {
+    "idleHeapImproved": false,
+    "idleRssImproved": true,
+    "startupNonInferior": false,
+    "latencyNonInferior": true,
+    "coreArtifactSmaller": true,
+    "runtimeClosureSmaller": true,
+    "springFreeCoreRuntime": true
+  },
+  "pass": false
+}
