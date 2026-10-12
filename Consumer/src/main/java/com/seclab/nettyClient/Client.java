@@ -15,7 +15,7 @@ import java.nio.channels.ClosedChannelException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Netty 客户端管理类.
+ * Owns the Netty client lifecycle.
  */
 public class Client {
 
@@ -45,7 +45,7 @@ public class Client {
     }
 
     /**
-     * 创建 channel.
+     * Creates a channel.
      */
     public static Channel createChannel(String host, int port) {
         try {

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0.0",
+  "protocolId": "tiny-rpc-metrology-v3.1-abba",
+  "predecessors": [
+    {
+      "protocol": "v2-strict-corrected-envelope",
+      "candidateCommit": "1121e064",
+      "result": "failed",
+      "preservedEvidence": "../post-attempt-1-comparison.json",
+      "validConclusions": ["idle heap did not improve", "idle RSS improved", "p95 latency met the frozen non-inferiority margin", "structural gates passed"],
+      "invalidatedConclusion": "The startup comparison was not interpreted because the timer boundaries were asymmetric. This does not erase the heap failure or any preserved raw sample."
+    }
+  ],
+  "current": {
+    "protocol": "v3.1 corrected paired method",
+    "candidatePolicy": "A new exact candidate identity is measured with the frozen corrected method only after independent approval.",
+    "failurePolicy": "Every failed or incomplete attempt directory remains immutable. Optimizations require a new exact candidate identity under the same approved method."
+  }
+}

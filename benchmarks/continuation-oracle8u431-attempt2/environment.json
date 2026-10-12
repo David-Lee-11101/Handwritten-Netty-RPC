@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "3.0.0",
+  "platform": "darwin 27.0.0 arm64",
+  "cpu": "Apple M4",
+  "logicalCpuCount": 10,
+  "memoryBytes": 17179869184,
+  "java": "java version \"1.8.0_431\" Java(TM) SE Runtime Environment (build 1.8.0_431-b10) Java HotSpot(TM) 64-Bit Server VM (build 25.431-b10, mixed mode) ",
+  "node": "v25.6.1",
+  "identitiesSha256": "2465a6971ef8661c1275e502625cad3c3ef18c1292c37544a8be423f5c5738d7",
+  "environmentId": "3023e0dbad32e09436eed6a09c5d3f3406b6c0fd67d28fbf971eac72f13c2024"
+}

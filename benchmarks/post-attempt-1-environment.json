@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0.0",
+  "outcome": "failed-frozen-envelope",
+  "measuredImplementationHead": "1121e0646bc7a563c14c6d550b2748649259abed",
+  "operatingSystem": "Darwin 25.6.0 arm64",
+  "cpu": "Apple M3 Pro",
+  "physicalCpuCount": 11,
+  "memoryBytes": 19327352832,
+  "java": "Oracle Java 8u441, HotSpot 25.441-b07",
+  "maven": "Apache Maven 3.9.9",
+  "node": "22.16.0",
+  "measurementWindow": "quiet coordinated window; no other project build was running",
+  "harnessSha256": {
+    "runCurrent": "ce7f0cd7be9bdab21d9e9c544a072b6d0fb2f2c6a8ac695729d1add13d4fbf5b",
+    "measureStructure": "4651156001ba2eb54fc8167b2f052908da6993ddbc0d3f258e2f364eafa5f1c2",
+    "compare": "fdcd44a1d2b4a1eac60a52c108f2cc2b704f08ae16bdb801a6a3b97972c015c2"
+  },
+  "evidenceSha256": {
+    "runs": "b144f3b663f86fda80aafd3ab097a5223cab9ae184097bedb907389dc9a9485c",
+    "structure": "b9e289789a76b4aae05e3e4a2bad357c9a31f7b6bc0c252692db3bb287208906",
+    "comparison": "7fc121f50ca4ab936c2b834546757d1cac11e1e366eb7f5cdc7c0fe4147d7c7a"
+  }
+}

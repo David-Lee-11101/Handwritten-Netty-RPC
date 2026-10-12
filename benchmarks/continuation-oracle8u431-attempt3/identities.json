@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "3.1.0",
+  "protocolId": "tiny-rpc-metrology-v3.1-abba",
+  "coordinator": {
+    "commit": "83ffe6d77bf4cd249db863f4df1e9597938b59ad",
+    "files": {
+      "benchmarks/v3/analyze.mjs": "e203c3fd98bfb0fdcd2e677829414d251e0a61fe69e3892ee4442e9337470bb9",
+      "benchmarks/v3/attempt-lineage.json": "11cf7a4fe6d666119c6cd7560387cd069f4b38a89b74e8d95813e35f0eb4c220",
+      "benchmarks/v3/environment.mjs": "6af14733371c66974dccc747ffe9f0b51bb869b5a173bea193387c6eed37ce44",
+      "benchmarks/v3/prepare-exact-roots.sh": "17886340b5adf1813313ddebf6dd00b0193065bee8ec029db0747bda46dc1e75",
+      "benchmarks/v3/record-run.mjs": "21bf9075e661629e49dc4102d988c57b0c72c3c3e6635989c800cc37cdfc9cf0",
+      "benchmarks/v3/run-paired.sh": "4081852281eb004883133ba07181f49d1590a4844692af4d1e89bbc612f56c6b",
+      "benchmarks/v3/runtime-manifest.mjs": "ae399cacec82faf2d0c092d89fca3f5672d124e474658bca6c70d3a41791879f",
+      "benchmarks/v3/tree-manifest.mjs": "a73d9af73ec6cb477588fb42ec93e76e077cf404c08dec02b85d1cb94255e159",
+      "benchmarks/v3/verify-identities.mjs": "78092f3c1ee89460ee2ed3a057c9eceba4a74c2dfa3e6a71f13381a9b75673e4"
+    }
+  },
+  "legacy": {
+    "productionBaseCommit": "27779a51bfa38822922d3a57e365d2956b0546b0",
+    "commit": "8dccd145a9626c6596af9e067059cdca4c443232",
+    "harness": {
+      "path": "Consumer/src/test/java/com/seclab/nettyClient/LegacyBenchmarkMain.java",
+      "sha256": "bc88f7b820e852b204dd26e4bcfdd5a8dabb4ccd2926c2c769a6750466bc1815"
+    },
+    "poms": {
+      "pom.xml": "5cca43a375611535038f1af0aad9af2a2657871ba6cd904af77f9c1df1cfcd63",
+      "Consumer/pom.xml": "27fc9a9994f22a139ffe600cbcc6420555fc006ca82c08c1e5786b00e2e9ebfb",
+      "Provider/pom.xml": "ce187994b994cc1b9ce275ab2b93f811e9294e1cd8d5e6b8f02569aeb098d054"
+    },
+    "runtimeManifest": {
+      "path": "Consumer/target/v3-runtime-manifest.json",
+      "directory": "Consumer/target/v3-runtime-deps",
+      "sha256": "b7c88016d1b1c435d975b33d18b58e0307df677d2d1bc8a442ded2157931142a"
+    },
+    "classManifest": {
+      "path": "Consumer/target/v3-class-manifest.json",
+      "sha256": "87caa88e2639099c9c8672e8cca5bda7cf9dea39aff691ec2b4c05b2fe94e324",
+      "roots": {
+        "main": "Consumer/target/classes",
+        "benchmark": "Consumer/target/test-classes"
+      }
+    }
+  },
+  "candidate": {
+    "commit": "83ffe6d77bf4cd249db863f4df1e9597938b59ad",
+    "harness": {
+      "path": "tiny-rpc-netty/src/test/java/io/smarthome/tinyrpc/netty/TinyRpcBenchmarkMain.java",
+      "sha256": "a39d2703204b2cc9d9785fcfee620f407cf28bf43cba3776c0a5600b094ecb86"
+    },
+    "poms": {
+      "pom.xml": "b92efb2486194421b9deca2f116edda660df05d0d686b70dc171040ed13e3875",
+      "tiny-rpc-core/pom.xml": "0f26ca1a378db7d88cb9b51f1162604ba6d31b736be0ea966960676462f92540",
+      "tiny-rpc-codec/pom.xml": "1860d37672938bd0f998bb85e259b73ad05ad2690ddbc8e5a90d20700c867cfa",
+      "tiny-rpc-netty/pom.xml": "12b8c3ac823520ebab461382dd1f63617ba78fc58f2ce1f898636f68c40e0a68",
+      "tiny-rpc-telemetry/pom.xml": "71c7fd1f51ef6fc4b5da5e60586947dadf55a5dd6452f195dbe0e474aa887da4"
+    },
+    "runtimeManifest": {
+      "path": "tiny-rpc-netty/target/v3-runtime-manifest.json",
+      "directory": "tiny-rpc-netty/target/v3-runtime-deps",
+      "sha256": "c699e31cab31b238903dab832d1587f6b4a03705fb10596361e494e9300eb00b"
+    },
+    "classManifest": {
+      "path": "tiny-rpc-netty/target/v3-class-manifest.json",
+      "sha256": "c43c57dd3f2ae2380d970e6a2efec4f163a2ca1417945f617109996acf7eab5b",
+      "roots": {
+        "main": "tiny-rpc-netty/target/classes",
+        "benchmark": "tiny-rpc-netty/target/test-classes"
+      }
+    },
+    "structure": {
+      "path": "tiny-rpc-netty/target/v3-structure.json",
+      "sha256": "7b81de3e57521873c6a2f9173306efd1f2a57605f4bb4ecc65e96dd65cd54c26"
+    }
+  },
+  "structuralCaps": {
+    "coreArtifactBytesExclusive": 34238,
+    "runtimeDependencyClosureBytesExclusive": 22563354,
+    "springArtifactsInCoreRuntime": 0
+  }
+}

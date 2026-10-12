@@ -1,0 +1,202 @@
+{
+  "schemaVersion": "3.0.0",
+  "method": "metrology-v3.1-abba",
+  "matchedPairs": 12,
+  "identities": {
+    "legacy": "8dccd145a9626c6596af9e067059cdca4c443232",
+    "candidate": "c2347e818c890feb88d9377ad5f7026bc0f65f8b"
+  },
+  "lineageProtocol": "tiny-rpc-metrology-v3.1-abba",
+  "bootstrap": {
+    "seed": 20261012,
+    "resamples": 10000,
+    "statistic": "matched-pair median difference"
+  },
+  "legacySummaries": {
+    "startupNanos": {
+      "median": 152832041.5,
+      "min": 150062541,
+      "max": 181147958,
+      "p95": 181147958
+    },
+    "p95LatencyNanos": {
+      "median": 289708.5,
+      "min": 221458,
+      "max": 310208,
+      "p95": 310208
+    }
+  },
+  "margins": {
+    "startupNanos": 9823021.5,
+    "p95LatencyNanos": 20499.5
+  },
+  "metrics": {
+    "idleHeapBytes": {
+      "pairedDifferences": [
+        -1846944,
+        -1966104,
+        -1964456,
+        -1852728,
+        -1964120,
+        -1964416,
+        -1850952,
+        -1964760,
+        -1850480,
+        -1970144,
+        -1852920,
+        -1857056
+      ],
+      "medianDifference": -1910588,
+      "lower95": -1964608,
+      "upper95": -1851840
+    },
+    "idleRssBytes": {
+      "pairedDifferences": [
+        -19038208,
+        -19152896,
+        -19480576,
+        -17694720,
+        -18989056,
+        -18235392,
+        -18677760,
+        -18563072,
+        -18907136,
+        -17924096,
+        -18939904,
+        -19382272
+      ],
+      "medianDifference": -18923520,
+      "lower95": -19095552,
+      "upper95": -18399232
+    },
+    "startupNanos": {
+      "pairedDifferences": [
+        -60653000,
+        -34442292,
+        -33247751,
+        -41582293,
+        -49882000,
+        -31998251,
+        -35655875,
+        -36193001,
+        -33756583,
+        -32211167,
+        -31623208,
+        -40992375
+      ],
+      "medianDifference": -35049083.5,
+      "lower95": -41287334,
+      "upper95": -32729459
+    },
+    "p95LatencyNanos": {
+      "pairedDifferences": [
+        -30709,
+        3667,
+        -34125,
+        -20792,
+        50167,
+        -57292,
+        -13916,
+        71042,
+        -98333,
+        16042,
+        -16167,
+        -4583
+      ],
+      "medianDifference": -15041.5,
+      "lower95": -32417,
+      "upper95": 9854.5
+    },
+    "throughputPerSecond": {
+      "pairedDifferences": [
+        -234.46000000000004,
+        363.89400000000023,
+        153.3090000000002,
+        398.7350000000006,
+        -180.38400000000001,
+        176.64599999999973,
+        -351.78199999999924,
+        -1302.871000000001,
+        164.9449999999997,
+        -94.6890000000003,
+        -510.5110000000004,
+        385.6990000000005
+      ],
+      "medianDifference": 29.309999999999945,
+      "lower95": -293.12099999999964,
+      "upper95": 270.27
+    }
+  },
+  "representativeEncodedFrames": {
+    "legacy": {
+      "readinessRequestFrameBytes": 167,
+      "readinessResponseFrameBytes": 142,
+      "warmupRequestFrameBytes": 170,
+      "warmupResponseFrameBytes": 145,
+      "measuredRequestFrameBytes": 171,
+      "measuredResponseFrameBytes": 146
+    },
+    "candidate": {
+      "readinessRequestFrameBytes": 232,
+      "readinessResponseFrameBytes": 119,
+      "warmupRequestFrameBytes": 235,
+      "warmupResponseFrameBytes": 122,
+      "measuredRequestFrameBytes": 234,
+      "measuredResponseFrameBytes": 121
+    }
+  },
+  "structure": {
+    "schemaVersion": "1.0.0",
+    "runtimeDependencyCount": 4,
+    "runtimeDependencyClosureBytes": 4508246,
+    "coreArtifactBytes": 7714,
+    "distributionArtifactBytes": 42958,
+    "combinedArtifactBytes": 42958,
+    "artifacts": [
+      {
+        "file": "tiny-rpc-codec-0.0.1-SNAPSHOT.jar",
+        "bytes": 11524
+      },
+      {
+        "file": "tiny-rpc-core-0.0.1-SNAPSHOT.jar",
+        "bytes": 7714
+      },
+      {
+        "file": "tiny-rpc-netty-0.0.1-SNAPSHOT.jar",
+        "bytes": 20162
+      },
+      {
+        "file": "tiny-rpc-telemetry-0.0.1-SNAPSHOT.jar",
+        "bytes": 3558
+      }
+    ],
+    "dependencies": [
+      {
+        "file": "netty-all-4.1.67.Final.jar",
+        "bytes": 4485450
+      },
+      {
+        "file": "tiny-rpc-codec-0.0.1-SNAPSHOT.jar",
+        "bytes": 11524
+      },
+      {
+        "file": "tiny-rpc-core-0.0.1-SNAPSHOT.jar",
+        "bytes": 7714
+      },
+      {
+        "file": "tiny-rpc-telemetry-0.0.1-SNAPSHOT.jar",
+        "bytes": 3558
+      }
+    ]
+  },
+  "checks": {
+    "idleHeapImproved": true,
+    "idleRssImproved": true,
+    "startupNonInferior": true,
+    "latencyNonInferior": true,
+    "coreArtifactSmaller": true,
+    "runtimeClosureSmaller": true,
+    "springFreeCoreRuntime": true
+  },
+  "pass": true
+}

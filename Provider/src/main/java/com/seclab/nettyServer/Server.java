@@ -49,10 +49,10 @@ public class Server implements Runnable, ApplicationContextAware {
                     .childHandler(new ServerChannelInitializer(applicationContext));
 
             ChannelFuture channelFuture = serverBootstrap.bind(port).sync();
-            log.info("Netty服务启动: [port: {}, time: {}]", port, LocalDateTime.now());
+            log.info("Netty server started: [port: {}, time: {}]", port, LocalDateTime.now());
             channelFuture.channel().closeFuture().sync();
         } catch (Exception e) {
-            log.error("Netty服务启动异常-" + e.getMessage());
+            log.error("Netty server startup failed: " + e.getMessage());
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
@@ -64,7 +64,7 @@ public class Server implements Runnable, ApplicationContextAware {
 //        ChannelInitializer<SocketChannel> channelInitializer = new ChannelInitializer<SocketChannel>() {
 //
 //            /**
-//             * 初始化channel
+//             * Initialize the channel.
 //             */
 //            @Override
 //            public void initChannel(SocketChannel ch) throws Exception {

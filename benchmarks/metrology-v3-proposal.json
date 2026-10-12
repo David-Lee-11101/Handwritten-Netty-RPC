@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "3.1.0-proposal",
+  "state": "frozen-executable-protocol-awaiting-independent-approval",
+  "protocolId": "tiny-rpc-metrology-v3.1-abba",
+  "purpose": "Correct the asymmetric startup timer found after the first strict post-change run while preserving every v2 sample, result, and numeric gate.",
+  "lineage": {
+    "v2EnvelopeSha256": "af2e8bbd2a86888670681c49e4531f3820fac0548863fc70a0a73a47428d861d",
+    "failedPostComparisonSha256": "7fc121f50ca4ab936c2b834546757d1cac11e1e366eb7f5cdc7c0fe4147d7c7a",
+    "v3LineageSha256": "11cf7a4fe6d666119c6cd7560387cd069f4b38a89b74e8d95813e35f0eb4c220",
+    "interpretation": "The timer asymmetry invalidates only the v2 cross-implementation startup interpretation. The v2 heap failure and all other preserved observations remain part of the audit record.",
+    "noResultDerivedTuning": true
+  },
+  "identityManifest": {
+    "path": "benchmarks/v3/identities.json",
+    "sha256": "4e14eea52c945ad38bab24c26da9b4903e047e1bbacf1d2a69c703b037abe132",
+    "legacyProductionBaseCommit": "27779a51bfa38822922d3a57e365d2956b0546b0",
+    "legacyMeasurementCommit": "a630be38072d9a96ed70ac942883972f8cb16ed8",
+    "candidateCommit": "5926c323ccbb7bc9d44f05df11ca4781526100b8"
+  },
+  "matchedProtocol": {
+    "pairs": 12,
+    "processesPerImplementation": 12,
+    "order": "Odd pairs run legacy-candidate; even pairs run candidate-legacy. Each pair is adjacent in one quiet window.",
+    "failurePolicy": "The attempt directory is create-only. Completed raw records and per-process stdout/stderr logs remain even when a later process fails. No unfavorable completed run is discarded or replaced.",
+    "java": "Oracle Java 8u441, HotSpot 25.441-b07",
+    "jvmFlags": ["-Xms64m", "-Xmx256m", "-XX:+UseSerialGC"],
+    "logicalWorkload": {
+      "readiness": "One echo call carrying ready, with exact returned value validation.",
+      "warmup": "200 sequential echo calls carrying warmup-0 through warmup-199, with every returned value validated.",
+      "measurement": "1000 sequential echo calls carrying value-0 through value-999, with every returned value validated.",
+      "wireDisclosure": "The logical payload sequence is matched. Protocol envelopes differ, so actual encoded request and response frame lengths for readiness, warmup-0, and value-0 are recorded and reported for both implementations."
+    },
+    "startup": {
+      "start": "The first statement in main, before every implementation-owned event-loop, dispatch group, server, client, or connection is constructed.",
+      "end": "Immediately after the first successful readiness RPC response is decoded and its exact echo value is validated.",
+      "clock": "System.nanoTime"
+    },
+    "idleMemory": "After readiness and all 200 validated warm-up calls, System.gc and a fixed 200 ms wait; record MemoryMXBean heap used bytes and ps RSS bytes.",
+    "latencyAndThroughput": "The same 1000 validated sequential measured RPCs; per-call System.nanoTime latency and one enclosing measured-loop throughput interval."
+  },
+  "statistics": {
+    "bootstrap": {"seed": 20261012, "confidence": 0.95, "resamples": 10000, "statistic": "matched-pair median difference"},
+    "ordering": "Validate metadata and workload markers, compute fresh legacy summaries and capped margins, then read candidate metric values and compute paired differences.",
+    "clockResolutionUpperBoundNanos": 84,
+    "memoryPass": "upper95CI(candidate-minus-legacy)<0 for idle heap and idle RSS",
+    "startupMarginNanos": "min(9823021.5, max(84, freshLegacyStartupP95-freshLegacyStartupMedian))",
+    "p95LatencyMarginNanos": "min(76020.5, max(84, freshLegacyP95LatencyP95-freshLegacyP95LatencyMedian))",
+    "nonInferiorityPass": "upper95CI(candidate-minus-legacy)<=the corresponding capped margin"
+  },
+  "structuralGates": {
+    "candidateCoreArtifactBytesExclusive": 34238,
+    "candidateRuntimeDependencyClosureBytesExclusive": 22563354,
+    "springArtifactsInCandidateCoreRuntime": 0,
+    "dependencyMethod": "Fresh dependency:copy-dependencies with includeScope=runtime. Test-scoped JUnit and Hamcrest are excluded.",
+    "reportSeparately": ["JDK-only core JAR", "four-module Spring-free distribution", "runtime dependency closure"],
+    "claimBoundary": "The core-only comparison is not presented as a reduction of the complete distribution."
+  },
+  "executableEvidence": {
+    "preparation": "benchmarks/v3/prepare-exact-roots.sh",
+    "identityVerification": "benchmarks/v3/verify-identities.mjs verifies source, POM, runtime JAR, compiled-class tree, harness, structure, and coordinator hashes",
+    "pairedCoordinator": "benchmarks/v3/run-paired.sh",
+    "analyzer": "benchmarks/v3/analyze.mjs",
+    "analyzerRegression": "node --test benchmarks/v3/analyze.test.mjs"
+  },
+  "publicationGate": "No low-footprint, startup, latency, or memory improvement claim is permitted until an independent reviewer approves v3.1 and every runtime and structural gate passes on the frozen candidate identity."
+}

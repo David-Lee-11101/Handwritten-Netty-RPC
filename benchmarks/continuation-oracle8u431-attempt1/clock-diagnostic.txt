@@ -1,0 +1,6 @@
+samples=1000000
+positiveDeltas=280792
+minimumNanos=41
+medianNanos=42
+p99Nanos=84
+maximumNanos=514209

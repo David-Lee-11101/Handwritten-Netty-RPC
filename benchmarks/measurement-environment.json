@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.0.0",
+  "measuredImplementationHead": "5c49f1176ab5e088d322593d765d4e0c03682809",
+  "operatingSystem": "Darwin 25.6.0 arm64",
+  "cpu": "Apple M3 Pro",
+  "physicalCpuCount": 11,
+  "memoryBytes": 19327352832,
+  "java": "Oracle Java 8u441, HotSpot 25.441-b07",
+  "maven": "Apache Maven 3.9.9",
+  "node": "22.16.0",
+  "measurementWindow": "quiet coordinated window; no other project build was running",
+  "harnessSha256": {
+    "runLegacy": "13f5219c461eda2b256a5a09370b655a545665949c79508a3fbe1c4bfef13671",
+    "analyzeBaseline": "2d4ca3e07db13e26ac0a501018af789626188efcd231626cb90033ba0af850f5",
+    "measureStructure": "82947d7ed83ea8960d89ee3d7bf04fdb52bd9c0a33182a77b20ecdd7898ff735",
+    "legacyBenchmarkMain": "05a7232e6034992d22667a7e5f7151bc768fe2d6fac35a69932fde0ecfb4dc57"
+  }
+}

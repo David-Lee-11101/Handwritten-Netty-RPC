@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "1.0.0",
+  "runtimeDependencyCount": 4,
+  "runtimeDependencyClosureBytes": 4508246,
+  "coreArtifactBytes": 7714,
+  "distributionArtifactBytes": 42962,
+  "combinedArtifactBytes": 42962,
+  "artifacts": [
+    {
+      "file": "tiny-rpc-codec-0.0.1-SNAPSHOT.jar",
+      "bytes": 11524
+    },
+    {
+      "file": "tiny-rpc-core-0.0.1-SNAPSHOT.jar",
+      "bytes": 7714
+    },
+    {
+      "file": "tiny-rpc-netty-0.0.1-SNAPSHOT.jar",
+      "bytes": 20166
+    },
+    {
+      "file": "tiny-rpc-telemetry-0.0.1-SNAPSHOT.jar",
+      "bytes": 3558
+    }
+  ],
+  "dependencies": [
+    {
+      "file": "netty-all-4.1.67.Final.jar",
+      "bytes": 4485450
+    },
+    {
+      "file": "tiny-rpc-codec-0.0.1-SNAPSHOT.jar",
+      "bytes": 11524
+    },
+    {
+      "file": "tiny-rpc-core-0.0.1-SNAPSHOT.jar",
+      "bytes": 7714
+    },
+    {
+      "file": "tiny-rpc-telemetry-0.0.1-SNAPSHOT.jar",
+      "bytes": 3558
+    }
+  ]
+}
