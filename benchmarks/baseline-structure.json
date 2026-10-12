@@ -1,0 +1,174 @@
+{
+  "schemaVersion": "1.0.0",
+  "runtimeDependencyCount": 39,
+  "runtimeDependencyClosureBytes": 22992959,
+  "combinedArtifactBytes": 34238,
+  "artifacts": [
+    {
+      "file": "Consumer-0.0.1-SNAPSHOT.jar",
+      "bytes": 18866
+    },
+    {
+      "file": "Provider-0.0.1-SNAPSHOT.jar",
+      "bytes": 15372
+    }
+  ],
+  "dependencies": [
+    {
+      "file": "fastjson-1.2.58.jar",
+      "bytes": 639519
+    },
+    {
+      "file": "hamcrest-core-1.3.jar",
+      "bytes": 45024
+    },
+    {
+      "file": "jackson-annotations-2.9.0.jar",
+      "bytes": 66519
+    },
+    {
+      "file": "jackson-core-2.9.9.jar",
+      "bytes": 325632
+    },
+    {
+      "file": "jackson-databind-2.9.9.jar",
+      "bytes": 1348108
+    },
+    {
+      "file": "jackson-datatype-jdk8-2.9.9.jar",
+      "bytes": 33429
+    },
+    {
+      "file": "jackson-datatype-jsr310-2.9.9.jar",
+      "bytes": 100674
+    },
+    {
+      "file": "jackson-module-parameter-names-2.9.9.jar",
+      "bytes": 8645
+    },
+    {
+      "file": "javax.annotation-api-1.3.2.jar",
+      "bytes": 26586
+    },
+    {
+      "file": "jul-to-slf4j-1.7.26.jar",
+      "bytes": 4589
+    },
+    {
+      "file": "junit-4.13.2.jar",
+      "bytes": 384581
+    },
+    {
+      "file": "log4j-1.2.17.jar",
+      "bytes": 489884
+    },
+    {
+      "file": "log4j-api-2.11.2.jar",
+      "bytes": 266283
+    },
+    {
+      "file": "log4j-to-slf4j-2.11.2.jar",
+      "bytes": 17522
+    },
+    {
+      "file": "logback-classic-1.2.3.jar",
+      "bytes": 290339
+    },
+    {
+      "file": "logback-core-1.2.3.jar",
+      "bytes": 471901
+    },
+    {
+      "file": "lombok-1.18.22.jar",
+      "bytes": 1950607
+    },
+    {
+      "file": "netty-all-4.1.48.Final.jar",
+      "bytes": 4157866
+    },
+    {
+      "file": "slf4j-api-1.7.26.jar",
+      "bytes": 41139
+    },
+    {
+      "file": "slf4j-log4j12-2.0.0-alpha1.jar",
+      "bytes": 11689
+    },
+    {
+      "file": "snakeyaml-1.23.jar",
+      "bytes": 301298
+    },
+    {
+      "file": "spring-aop-5.1.8.RELEASE.jar",
+      "bytes": 369054
+    },
+    {
+      "file": "spring-beans-5.1.8.RELEASE.jar",
+      "bytes": 673949
+    },
+    {
+      "file": "spring-boot-2.1.6.RELEASE.jar",
+      "bytes": 952545
+    },
+    {
+      "file": "spring-boot-autoconfigure-2.1.6.RELEASE.jar",
+      "bytes": 1261089
+    },
+    {
+      "file": "spring-boot-starter-2.1.6.RELEASE.jar",
+      "bytes": 397
+    },
+    {
+      "file": "spring-boot-starter-json-2.1.6.RELEASE.jar",
+      "bytes": 403
+    },
+    {
+      "file": "spring-boot-starter-logging-2.1.6.RELEASE.jar",
+      "bytes": 405
+    },
+    {
+      "file": "spring-boot-starter-tomcat-2.1.6.RELEASE.jar",
+      "bytes": 404
+    },
+    {
+      "file": "spring-boot-starter-web-2.3.2.RELEASE.jar",
+      "bytes": 4796
+    },
+    {
+      "file": "spring-context-5.1.8.RELEASE.jar",
+      "bytes": 1102207
+    },
+    {
+      "file": "spring-core-5.1.8.RELEASE.jar",
+      "bytes": 1293168
+    },
+    {
+      "file": "spring-expression-5.1.8.RELEASE.jar",
+      "bytes": 280795
+    },
+    {
+      "file": "spring-jcl-5.1.8.RELEASE.jar",
+      "bytes": 23761
+    },
+    {
+      "file": "spring-web-5.1.8.RELEASE.jar",
+      "bytes": 1386501
+    },
+    {
+      "file": "spring-webmvc-5.1.8.RELEASE.jar",
+      "bytes": 800760
+    },
+    {
+      "file": "tomcat-embed-core-9.0.21.jar",
+      "bytes": 3345625
+    },
+    {
+      "file": "tomcat-embed-el-9.0.21.jar",
+      "bytes": 250076
+    },
+    {
+      "file": "tomcat-embed-websocket-9.0.21.jar",
+      "bytes": 265190
+    }
+  ]
+}
