@@ -1,0 +1,23 @@
+benchmarks/acceptance-envelope-v2.json
+  s_7011714e525495::t_cc94c84fdb5de2 1-70
+benchmarks/NanoTimeResolutionMain.java
+  s_7011714e525495::t_b9272359c425fb 1-32
+benchmarks/runtime-only-dependencies.txt
+  s_7011714e525495::t_cc94c84fdb5de2 1-37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "6c2933edad0768cebb8662f59ed43b1635f6aff9",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
