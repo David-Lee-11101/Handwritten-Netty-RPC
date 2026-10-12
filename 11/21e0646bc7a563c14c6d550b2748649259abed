@@ -1,0 +1,27 @@
+benchmarks/compare.mjs
+  s_7011714e525495::t_14531e88466738 46
+benchmarks/run-current.sh
+  s_7011714e525495::t_972bdcba9f1077 15,20-21,23
+  s_7011714e525495::t_14531e88466738 25-28
+benchmarks/measure-structure.mjs
+  s_7011714e525495::t_14531e88466738 30
+  s_7011714e525495::t_972bdcba9f1077 4-6,9-15,21-24,29
+benchmarks/README.md
+  s_7011714e525495::t_14531e88466738 15-16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "1121e0646bc7a563c14c6d550b2748649259abed",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
