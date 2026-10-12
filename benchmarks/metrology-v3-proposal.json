@@ -12,10 +12,10 @@
   },
   "identityManifest": {
     "path": "benchmarks/v3/identities.json",
-    "sha256": "98220e519065435b3b8e089e29591bad8ee5539a80311a475d56dd5aa9312b79",
+    "sha256": "4e14eea52c945ad38bab24c26da9b4903e047e1bbacf1d2a69c703b037abe132",
     "legacyProductionBaseCommit": "27779a51bfa38822922d3a57e365d2956b0546b0",
     "legacyMeasurementCommit": "a630be38072d9a96ed70ac942883972f8cb16ed8",
-    "candidateCommit": "9fb450b9ddac79558f9946849712ee464530c8ee"
+    "candidateCommit": "5926c323ccbb7bc9d44f05df11ca4781526100b8"
   },
   "matchedProtocol": {
     "pairs": 12,
@@ -57,7 +57,7 @@
   },
   "executableEvidence": {
     "preparation": "benchmarks/v3/prepare-exact-roots.sh",
-    "identityVerification": "benchmarks/v3/verify-identities.mjs",
+    "identityVerification": "benchmarks/v3/verify-identities.mjs verifies source, POM, runtime JAR, compiled-class tree, harness, structure, and coordinator hashes",
     "pairedCoordinator": "benchmarks/v3/run-paired.sh",
     "analyzer": "benchmarks/v3/analyze.mjs",
     "analyzerRegression": "node --test benchmarks/v3/analyze.test.mjs"

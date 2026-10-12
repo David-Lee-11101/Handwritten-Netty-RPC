@@ -2,16 +2,17 @@
   "schemaVersion": "3.1.0",
   "protocolId": "tiny-rpc-metrology-v3.1-abba",
   "coordinator": {
-    "commit": "9fb450b9ddac79558f9946849712ee464530c8ee",
+    "commit": "5926c323ccbb7bc9d44f05df11ca4781526100b8",
     "files": {
       "benchmarks/v3/analyze.mjs": "e203c3fd98bfb0fdcd2e677829414d251e0a61fe69e3892ee4442e9337470bb9",
       "benchmarks/v3/attempt-lineage.json": "11cf7a4fe6d666119c6cd7560387cd069f4b38a89b74e8d95813e35f0eb4c220",
       "benchmarks/v3/environment.mjs": "6af14733371c66974dccc747ffe9f0b51bb869b5a173bea193387c6eed37ce44",
-      "benchmarks/v3/prepare-exact-roots.sh": "358d5d270e724533e97e2d94ad4c13fbcb8de0752c52f8c775d67d58389c991b",
+      "benchmarks/v3/prepare-exact-roots.sh": "17886340b5adf1813313ddebf6dd00b0193065bee8ec029db0747bda46dc1e75",
       "benchmarks/v3/record-run.mjs": "21bf9075e661629e49dc4102d988c57b0c72c3c3e6635989c800cc37cdfc9cf0",
-      "benchmarks/v3/run-paired.sh": "4b0d256fcdbc77e15d754478d57a4b408ec3c3eafe20629caeb47ce1e8a02fb7",
+      "benchmarks/v3/run-paired.sh": "4081852281eb004883133ba07181f49d1590a4844692af4d1e89bbc612f56c6b",
       "benchmarks/v3/runtime-manifest.mjs": "ae399cacec82faf2d0c092d89fca3f5672d124e474658bca6c70d3a41791879f",
-      "benchmarks/v3/verify-identities.mjs": "f1c45dd6261b75a9fd5d83b194466e4d7f777299bcf1fbfbcbafe1a3b73079c7"
+      "benchmarks/v3/tree-manifest.mjs": "a73d9af73ec6cb477588fb42ec93e76e077cf404c08dec02b85d1cb94255e159",
+      "benchmarks/v3/verify-identities.mjs": "78092f3c1ee89460ee2ed3a057c9eceba4a74c2dfa3e6a71f13381a9b75673e4"
     }
   },
   "legacy": {
@@ -28,11 +29,20 @@
     },
     "runtimeManifest": {
       "path": "Consumer/target/v3-runtime-manifest.json",
+      "directory": "Consumer/target/v3-runtime-deps",
       "sha256": "b7c88016d1b1c435d975b33d18b58e0307df677d2d1bc8a442ded2157931142a"
+    },
+    "classManifest": {
+      "path": "Consumer/target/v3-class-manifest.json",
+      "sha256": "87caa88e2639099c9c8672e8cca5bda7cf9dea39aff691ec2b4c05b2fe94e324",
+      "roots": {
+        "main": "Consumer/target/classes",
+        "benchmark": "Consumer/target/test-classes"
+      }
     }
   },
   "candidate": {
-    "commit": "9fb450b9ddac79558f9946849712ee464530c8ee",
+    "commit": "5926c323ccbb7bc9d44f05df11ca4781526100b8",
     "harness": {
       "path": "tiny-rpc-netty/src/test/java/io/smarthome/tinyrpc/netty/TinyRpcBenchmarkMain.java",
       "sha256": "a39d2703204b2cc9d9785fcfee620f407cf28bf43cba3776c0a5600b094ecb86"
@@ -46,7 +56,16 @@
     },
     "runtimeManifest": {
       "path": "tiny-rpc-netty/target/v3-runtime-manifest.json",
-      "sha256": "6a140b2e6c40c3a0ca82c833ee23dfa4c1f8e3ae453d457c4a116d032ce7a77b"
+      "directory": "tiny-rpc-netty/target/v3-runtime-deps",
+      "sha256": "933fdc945872783116e2aed67eddb31dc7956e3efd9cfde810772221260e3449"
+    },
+    "classManifest": {
+      "path": "tiny-rpc-netty/target/v3-class-manifest.json",
+      "sha256": "3f0593c90cd129278fe43b9b2e5881ce184de3ce67d152fc48d7caa8f19be089",
+      "roots": {
+        "main": "tiny-rpc-netty/target/classes",
+        "benchmark": "tiny-rpc-netty/target/test-classes"
+      }
     },
     "structure": {
       "path": "tiny-rpc-netty/target/v3-structure.json",
