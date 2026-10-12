@@ -1,0 +1,21 @@
+benchmarks/analyze-baseline.mjs
+  s_7011714e525495::t_7e6b985b0829fc 1-57
+benchmarks/run-legacy.sh
+  s_7011714e525495::t_bf23666dde21c2 1-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "5747b1b599ced9b30d41cfbc450c21205aa791d7",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
