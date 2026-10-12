@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "2.0.0",
+  "state": "frozen-before-post-change-measurement",
+  "supersedes": "acceptance-envelope.json",
+  "correctionReason": [
+    "The first structural report retained JUnit and Hamcrest from a stale test classpath even though both POM entries are test-scoped.",
+    "The first latency margin used a 1 ms resolution assumption that was not supported by System.nanoTime measurements."
+  ],
+  "immutability": "Original runs and the first envelope remain unchanged for audit. This correction only removes test artifacts and tightens the latency margin before any post-change benchmark.",
+  "method": {
+    "matchedRuns": 12,
+    "warmupCallsPerRun": 200,
+    "measuredCallsPerRun": 1000,
+    "bootstrap": {
+      "seed": 20261012,
+      "confidence": 0.95,
+      "resamples": 10000,
+      "statistic": "matched-run median difference"
+    },
+    "jvmFlags": ["-Xms64m", "-Xmx256m", "-XX:+UseSerialGC"],
+    "memoryPass": "upper95CI(new-minus-baseline)<0",
+    "nonInferiorityPass": "upper95CI(new-minus-baseline)<=frozenMarginNanos"
+  },
+  "baseline": {
+    "startupNanos": {"median": 121813645.5, "min": 115935458, "max": 131636667, "p95": 131636667},
+    "idleHeapBytes": {"median": 5238824, "min": 5180056, "max": 5301832, "p95": 5301832},
+    "idleRssBytes": {"median": 95027200, "min": 89407488, "max": 95567872, "p95": 95567872},
+    "p50LatencyNanos": {"median": 146854.5, "min": 128708, "max": 153042, "p95": 153042},
+    "p95LatencyNanos": {"median": 390687.5, "min": 291041, "max": 466708, "p95": 466708},
+    "p99LatencyNanos": {"median": 620792, "min": 415167, "max": 1686083, "p95": 1686083},
+    "throughputPerSecond": {"median": 5556.089, "min": 4568.932, "max": 5932.556, "p95": 5932.556}
+  },
+  "baselineStructure": {
+    "runtimeDependencyCount": 37,
+    "runtimeDependencyClosureBytes": 22563354,
+    "combinedArtifactBytes": 34238,
+    "excludedTestArtifacts": ["junit-4.13.2.jar", "hamcrest-core-1.3.jar"],
+    "auditMethod": "Fresh detached worktree at the public source-equivalent baseline; Maven dependency:copy-dependencies with includeScope=runtime for Consumer and Provider; unique artifacts by filename."
+  },
+  "clockResolutionAudit": {
+    "clock": "System.nanoTime",
+    "java": "Oracle Java 8u441, HotSpot 25.441-b07",
+    "readAttempts": 1000000,
+    "positiveDeltas": 287809,
+    "minimumNanos": 41,
+    "medianNanos": 42,
+    "p99Nanos": 84,
+    "maximumNanos": 534167,
+    "resolutionUpperBoundNanos": 84
+  },
+  "frozenMargins": {
+    "startupNanos": 9823021.5,
+    "p95LatencyNanos": 76020.5,
+    "latencyDerivation": "max(clock p99 positive delta 84 ns, baseline cross-run p95 466708 - median 390687.5)"
+  },
+  "mandatoryStructure": {
+    "springArtifactsInCoreRuntime": 0,
+    "maxEncodedFrameBytes": 1048576,
+    "maxPendingRequests": 256,
+    "maxQueuedWritesPerChannel": 256,
+    "coreArtifactBytes": "strictly-less-than-34238",
+    "runtimeDependencyClosureBytes": "strictly-less-than-22563354"
+  },
+  "sourceEvidence": {
+    "originalRunsSha256": "86cf241fb2764669823696babfd145407726b4e1728fa7b47397448535dbd409",
+    "measuredPrivateHead": "5c49f1176ab5e088d322593d765d4e0c03682809",
+    "publicSourceEquivalentHead": "27779a5",
+    "note": "The private metadata branch is retained locally and will not be published; source and harness hashes are recorded in measurement-environment.json."
+  }
+}
