@@ -30,7 +30,7 @@ sequenceDiagram
 | Module | Responsibility |
 | --- | --- |
 | `tiny-rpc-core` | JDK-only request/result types, limits, handlers, and allowlisted registry |
-| `tiny-rpc-codec` | strict JSON-line framing with a 1 MiB default limit and local safe parser configuration |
+| `tiny-rpc-codec` | strict JSON-line framing with a 1 MiB default limit and a non-reflective flat-envelope parser |
 | `tiny-rpc-netty` | bounded client/server transport, correlation, deadlines, cancellation, and lifecycle ownership |
 | `tiny-rpc-telemetry` | payload-free frame observations for traffic profiling |
 | `tiny-rpc-spring-adapter` | optional explicit Spring service registration |
