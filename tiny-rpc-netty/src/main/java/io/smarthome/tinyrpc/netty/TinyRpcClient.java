@@ -60,11 +60,12 @@ public final class TinyRpcClient implements Closeable {
                             socket.pipeline().addLast(new ResultHandler());
                         }
                     }).connect(host, port).sync().channel();
-        } catch (InterruptedException interrupted) {
+        } catch (Throwable failure) {
             eventLoop.shutdownGracefully(0, 2, TimeUnit.SECONDS).syncUninterruptibly();
-            Thread.currentThread().interrupt(); throw interrupted;
-        } catch (RuntimeException failure) {
-            eventLoop.shutdownGracefully(0, 2, TimeUnit.SECONDS).syncUninterruptibly(); throw failure;
+            if (failure instanceof InterruptedException) { Thread.currentThread().interrupt(); throw (InterruptedException) failure; }
+            if (failure instanceof RuntimeException) throw (RuntimeException) failure;
+            if (failure instanceof Error) throw (Error) failure;
+            throw new IllegalStateException("TinyRPC connection failed", failure);
         }
         this.channel = connected;
         this.channel.closeFuture().addListener(ignored -> failAll(new ClosedChannelException()));

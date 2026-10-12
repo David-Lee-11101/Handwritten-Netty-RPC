@@ -67,6 +67,28 @@ public class TinyRpcLoopbackTest {
         }
     }
 
+    @Test public void failedConnectReleasesOwnedEventLoop() throws Exception {
+        java.net.ServerSocket reservation = new java.net.ServerSocket(0, 1, java.net.InetAddress.getByName("127.0.0.1"));
+        int unavailablePort = reservation.getLocalPort(); reservation.close();
+        java.util.Set<Long> before = nettyThreadIds();
+        try {
+            TinyRpcClient.connect("127.0.0.1", unavailablePort, RpcLimits.defaults(), null);
+            throw new AssertionError("Expected connection failure");
+        } catch (IllegalStateException expected) { }
+        long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(3);
+        while (!newThreads(before).isEmpty() && System.nanoTime() < deadline) Thread.sleep(20);
+        assertTrue("Failed connection leaked event-loop threads: " + newThreads(before), newThreads(before).isEmpty());
+    }
+
+    private static java.util.Set<Long> nettyThreadIds() {
+        java.util.Set<Long> ids = new java.util.HashSet<>();
+        for (Thread thread : Thread.getAllStackTraces().keySet()) if (thread.isAlive() && thread.getName().contains("nioEventLoopGroup")) ids.add(thread.getId());
+        return ids;
+    }
+    private static java.util.Set<Long> newThreads(java.util.Set<Long> before) {
+        java.util.Set<Long> ids = nettyThreadIds(); ids.removeAll(before); return ids;
+    }
+
     @Test
     public void pendingLimitAndDeadlineHaveDefinedFailures() throws Exception {
         RpcLimits limits = new RpcLimits(1024, 1, 1, 1);
