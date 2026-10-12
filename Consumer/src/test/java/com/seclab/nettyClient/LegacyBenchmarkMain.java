@@ -38,10 +38,11 @@ public final class LegacyBenchmarkMain {
     }
 
     public static void main(String[] args) throws Exception {
+        // Metrology v3 starts before all implementation-owned runtime groups, matching TinyRpcBenchmarkMain.
+        long processStart = System.nanoTime();
         EventLoopGroup boss = new NioEventLoopGroup(1);
         EventLoopGroup workers = new NioEventLoopGroup(2);
         Channel server = null;
-        long processStart = System.nanoTime();
         try {
             EchoService target = new EchoServiceImpl();
             server = new ServerBootstrap()

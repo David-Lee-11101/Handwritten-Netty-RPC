@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "3.0.0-proposal",
+  "state": "frozen-proposal-awaiting-independent-review",
+  "purpose": "Correct the asymmetric startup timer discovered after the first strict post-change run without changing any v2 evidence or relaxing any gate.",
+  "audit": {
+    "v2EnvelopeSha256": "af2e8bbd2a86888670681c49e4531f3820fac0548863fc70a0a73a47428d861d",
+    "failedPostComparisonSha256": "7fc121f50ca4ab936c2b834546757d1cac11e1e366eb7f5cdc7c0fe4147d7c7a",
+    "finding": "The v2 legacy timer started after two implementation-owned NioEventLoopGroup constructors, while the TinyRPC timer started before its implementation-owned event-loop groups were constructed.",
+    "preservation": "All v1/v2 envelopes, runs, structures, and the failed first post-change result remain immutable and published as audit evidence.",
+    "noResultDerivedTuning": true
+  },
+  "implementations": {
+    "legacyProductionSource": "public source-equivalent baseline 27779a5; apply only the reviewed v3 measurement harness",
+    "candidateProductionSource": "exact public-safe candidate commit selected after review",
+    "legacyHarnessSha256": "8ffdd3b6bbb21bc0d7d17468147e6601a554233afcbafd59950078d0a36c1f39",
+    "candidateHarnessSha256": "eb2a09dadc6f5e4e46a204c9fb1f5a3375b6fdef23b7c803ebac1bcbc493e3d7"
+  },
+  "matchedProtocol": {
+    "freshProcessesPerImplementation": 12,
+    "pairing": "Run adjacent legacy/candidate pairs in one coordinated quiet window; alternate pair order AB then BA. Pair index is retained for bootstrap comparison.",
+    "failurePolicy": "Do not discard or replace an unfavorable completed run. A process that fails to emit a valid record invalidates the window and is reported.",
+    "java": "Oracle Java 8u441, HotSpot 25.441-b07",
+    "jvmFlags": ["-Xms64m", "-Xmx256m", "-XX:+UseSerialGC"],
+    "logicalPayloads": {
+      "readiness": "echo the string ready once",
+      "warmup": "200 sequential echo calls carrying warmup-0 through warmup-199",
+      "measurement": "1000 sequential echo calls carrying value-0 through value-999"
+    },
+    "startup": {
+      "start": "The first statement in main, before every implementation-owned event-loop, dispatch group, server, client, or connection is constructed.",
+      "end": "Immediately after the first successful readiness RPC response is validated.",
+      "clock": "System.nanoTime"
+    },
+    "idleMemory": {
+      "point": "After readiness and all 200 warm-up calls, followed by System.gc and a fixed 200 ms wait.",
+      "heap": "MemoryMXBean heap used bytes",
+      "rss": "ps -o rss= for the measured JVM PID, converted from KiB to bytes"
+    },
+    "latencyAndThroughput": {
+      "point": "The same 1000 sequential measured RPCs in each fresh process.",
+      "latency": "Per-call System.nanoTime delta; report p50, p95, and p99.",
+      "throughput": "1000 calls divided by the enclosing measured-loop System.nanoTime delta."
+    }
+  },
+  "statistics": {
+    "bootstrap": {
+      "seed": 20261012,
+      "confidence": 0.95,
+      "resamples": 10000,
+      "statistic": "matched-pair median difference"
+    },
+    "clockResolutionUpperBoundNanos": 84,
+    "memoryPass": "upper95CI(candidate-minus-legacy)<0 for both idle heap and idle RSS",
+    "startupMarginNanos": "min(9823021.5, max(84, freshLegacyStartupP95-freshLegacyStartupMedian))",
+    "p95LatencyMarginNanos": "min(76020.5, max(84, freshLegacyP95LatencyP95-freshLegacyP95LatencyMedian))",
+    "startupPass": "upper95CI(candidate-minus-legacy)<=startupMarginNanos",
+    "p95LatencyPass": "upper95CI(candidate-minus-legacy)<=p95LatencyMarginNanos",
+    "marginCap": "Neither v3 non-inferiority margin may exceed the stricter frozen v2 value."
+  },
+  "structuralGates": {
+    "baselineDependencies": "Fresh dependency:copy-dependencies with includeScope=runtime; exclude test-scoped artifacts.",
+    "candidateCoreArtifactBytes": "strictly less than the two legacy application JARs combined",
+    "candidateRuntimeDependencyClosureBytes": "strictly less than the unique legacy runtime-only dependency closure",
+    "springArtifactsInCandidateCoreRuntime": 0,
+    "reportSeparately": ["JDK-only core JAR", "four-module Spring-free distribution", "runtime dependency closure"]
+  },
+  "publicationGate": "No low-footprint, startup, or latency improvement claim is permitted until independent method review passes and every v3 runtime and structural gate passes on the exact candidate source."
+}
