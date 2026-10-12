@@ -1,9 +1,13 @@
 benchmarks/analyze-baseline.mjs
   s_7011714e525495::t_f5216d0f8d072a 4-6,42,55-58,62
+  s_7011714e525495::t_f13d41d994f7a4 4-6,42,55-58
 benchmarks/measure-structure.mjs
   s_7011714e525495::t_1951d900496502 1-24
+  s_7011714e525495::t_f13d41d994f7a4 1-24
 benchmarks/run-legacy.sh
   s_7011714e525495::t_3fd3c6b1877ae8 8,23-31
+  s_7011714e525495::t_f13d41d994f7a4 23-26,28-31
+  s_7011714e525495::t_8fd4d1eb5e50fb 8,27
 ---
 {
   "schema_version": "authorship/3.0.0",
