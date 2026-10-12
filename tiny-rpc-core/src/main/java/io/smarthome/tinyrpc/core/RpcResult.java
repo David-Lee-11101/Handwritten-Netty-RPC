@@ -26,6 +26,22 @@ public class RpcResult {
         return value.length() <= 512 ? value : value.substring(0, 512);
     }
 
+    public void validate() {
+        if (!"1.0.0".equals(schemaVersion)) throw new IllegalArgumentException("Unsupported schemaVersion");
+        if (requestId == null || !requestId.matches("[a-zA-Z][a-zA-Z0-9._:-]{2,127}"))
+            throw new IllegalArgumentException("requestId must be an opaque contract identifier");
+        if (durationMs < 0) throw new IllegalArgumentException("durationMs must be non-negative");
+        if ("success".equals(status)) {
+            if (valueJson == null || errorCode != null || errorMessage != null)
+                throw new IllegalArgumentException("Successful result must contain only a value");
+            return;
+        }
+        if (!("error".equals(status) || "timeout".equals(status) || "cancelled".equals(status)))
+            throw new IllegalArgumentException("Unsupported result status");
+        if (valueJson != null || errorCode == null || errorCode.trim().isEmpty() || errorMessage == null || errorMessage.length() > 512)
+            throw new IllegalArgumentException("Failed result must contain a bounded structured error");
+    }
+
     public boolean isSuccess() { return "success".equals(status); }
     public String getSchemaVersion() { return schemaVersion; }
     public void setSchemaVersion(String schemaVersion) { this.schemaVersion = schemaVersion; }

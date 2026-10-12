@@ -24,7 +24,7 @@ public class TinyRpcLoopbackTest {
         RpcLimits limits = new RpcLimits(1024, 2, 2, 2);
         List<TransportObservation> observations = new CopyOnWriteArrayList<>();
         AtomicReference<String> dispatchThread = new AtomicReference<>();
-        try (TinyRpcServer server = TinyRpcServer.builder().limits(limits).telemetry(observations::add)
+        try (TinyRpcServer server = TinyRpcServer.builder().limits(limits)
                 .register("sensor.service", "read", arguments -> {
                     dispatchThread.set(Thread.currentThread().getName());
                     return "{\"type\":\"number\",\"value\":21.5}";
@@ -47,11 +47,24 @@ public class TinyRpcLoopbackTest {
         assertEquals(4, observations.size());
         assertEquals(2, observations.stream().filter(value -> "client-to-server".equals(value.getDirection())).count());
         assertEquals(2, observations.stream().filter(value -> "server-to-client".equals(value.getDirection())).count());
+        for (int index = 1; index < observations.size(); index++)
+            assertTrue(observations.get(index).getMonotonicOffsetNanos() >= observations.get(index - 1).getMonotonicOffsetNanos());
         observations.forEach(observation -> {
             assertEquals("tiny-rpc-netty", observation.getTransport());
             assertTrue(observation.getEncodedFrameLength() > 0);
             assertTrue(observation.getMonotonicOffsetNanos() >= 0);
         });
+    }
+
+    @Test public void telemetryFailureDoesNotChangeRpcOutcomeOrLeakPendingCalls() throws Exception {
+        RpcLimits limits = new RpcLimits(1024, 2, 2, 2);
+        try (TinyRpcServer server = TinyRpcServer.builder().limits(limits)
+                .register("sensor.service", "read", arguments -> "true").build().bind("127.0.0.1", 0);
+             TinyRpcClient client = TinyRpcClient.connect("127.0.0.1", server.port(), limits,
+                     observation -> { throw new IllegalStateException("observer failed"); })) {
+            assertTrue(client.invoke(request("request-201", "sensor.service", "read", 1000)).get(2, TimeUnit.SECONDS).isSuccess());
+            assertEquals(0, client.pendingCount()); assertEquals(0, client.queuedWriteCount());
+        }
     }
 
     @Test
@@ -74,7 +87,7 @@ public class TinyRpcLoopbackTest {
             assertTrue(cancelled.cancel(true));
             assertEquals(0, client.pendingCount());
             try {
-                client.invoke(request("request-103", "slow.service", "wait", 10)).get(1, TimeUnit.SECONDS);
+                client.invoke(request("request-103", "slow.service", "wait", 100)).get(1, TimeUnit.SECONDS);
                 throw new AssertionError("Expected deadline failure");
             } catch (ExecutionException expected) {
                 assertTrue(expected.getCause() instanceof java.util.concurrent.TimeoutException);

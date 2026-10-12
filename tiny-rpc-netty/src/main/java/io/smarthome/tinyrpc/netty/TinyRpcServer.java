@@ -109,7 +109,7 @@ public final class TinyRpcServer implements Closeable {
 
         private void write(ChannelHandlerContext context, RpcRequest request, RpcResult result) {
             byte[] bytes = codec.encodeResult(result);
-            telemetry.onObservation(new TransportObservation(request.getTraceId(), request.getSessionId(), request.getRequestId(),
+            observe(new TransportObservation(request.getTraceId(), request.getSessionId(), request.getRequestId(),
                     "server-to-client", bytes.length, System.nanoTime() - monotonicOrigin));
             context.writeAndFlush(Unpooled.wrappedBuffer(bytes));
         }
@@ -118,6 +118,9 @@ public final class TinyRpcServer implements Closeable {
     }
 
     private static long elapsedMs(long started) { return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - started); }
+    private void observe(TransportObservation observation) {
+        try { telemetry.onObservation(observation); } catch (RuntimeException ignored) { }
+    }
 
     public static final class Builder {
         private RpcLimits limits = RpcLimits.defaults();
