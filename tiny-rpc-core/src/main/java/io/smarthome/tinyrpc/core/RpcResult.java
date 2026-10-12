@@ -1,6 +1,7 @@
 package io.smarthome.tinyrpc.core;
 
 public class RpcResult {
+    private static final java.util.regex.Pattern IDENTIFIER = java.util.regex.Pattern.compile("[a-zA-Z][a-zA-Z0-9._:-]{2,127}");
     private String schemaVersion = "1.0.0";
     private String requestId;
     private String status;
@@ -28,7 +29,7 @@ public class RpcResult {
 
     public void validate() {
         if (!"1.0.0".equals(schemaVersion)) throw new IllegalArgumentException("Unsupported schemaVersion");
-        if (requestId == null || !requestId.matches("[a-zA-Z][a-zA-Z0-9._:-]{2,127}"))
+        if (requestId == null || !IDENTIFIER.matcher(requestId).matches())
             throw new IllegalArgumentException("requestId must be an opaque contract identifier");
         if (durationMs < 0) throw new IllegalArgumentException("durationMs must be non-negative");
         if ("success".equals(status)) {

@@ -1,6 +1,7 @@
 package io.smarthome.tinyrpc.core;
 
 public class RpcRequest {
+    private static final java.util.regex.Pattern IDENTIFIER = java.util.regex.Pattern.compile("[a-zA-Z][a-zA-Z0-9._:-]{2,127}");
     private String schemaVersion = "1.0.0";
     private String traceId;
     private String sessionId;
@@ -32,7 +33,7 @@ public class RpcRequest {
     }
 
     private static String requireId(String value, String name) {
-        if (value == null || !value.matches("[a-zA-Z][a-zA-Z0-9._:-]{2,127}")) {
+        if (value == null || !IDENTIFIER.matcher(value).matches()) {
             throw new IllegalArgumentException(name + " must be an opaque contract identifier");
         }
         return value;
