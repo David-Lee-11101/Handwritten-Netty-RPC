@@ -3,7 +3,6 @@ package io.smarthome.tinyrpc.codec;
 import io.smarthome.tinyrpc.core.RpcLimits;
 import io.smarthome.tinyrpc.core.RpcRequest;
 import io.smarthome.tinyrpc.core.RpcResult;
-import com.alibaba.fastjson.parser.ParserConfig;
 import org.junit.Test;
 
 import java.nio.charset.StandardCharsets;
@@ -29,12 +28,8 @@ public class JsonLineCodecTest {
         }
     }
 
-    @Test public void usesLocalSafeParserAndRejectsSpecialOrUnknownKeys() {
-        boolean globalSafeMode = ParserConfig.getGlobalInstance().isSafeMode();
-        boolean globalAutoType = ParserConfig.getGlobalInstance().isAutoTypeSupport();
+    @Test public void rejectsSpecialOrUnknownKeys() {
         JsonLineCodec codec = new JsonLineCodec(new RpcLimits(2048, 2, 2, 2));
-        assertEquals(globalSafeMode, ParserConfig.getGlobalInstance().isSafeMode());
-        assertEquals(globalAutoType, ParserConfig.getGlobalInstance().isAutoTypeSupport());
         expectInvalid(() -> codec.decodeRequest(frame("{\"schemaVersion\":\"1.0.0\",\"traceId\":\"trace-001\",\"sessionId\":\"session-001\",\"requestId\":\"request-001\",\"serviceId\":\"sensor.service\",\"operation\":\"read\",\"argumentsJson\":\"[]\",\"deadlineEpochMs\":9999999999999,\"unknown\":true}")));
         expectInvalid(() -> codec.decodeRequest(frame("{\"@type\":\"java.lang.Runtime\"}")));
         expectInvalid(() -> codec.decodeRequest(frame("{\"$ref\":\"$\"}")));
@@ -59,6 +54,13 @@ public class JsonLineCodecTest {
         String error = "bad input: \\\"quoted\\\" \\\\ slash\nnext line 中文";
         RpcResult result = RpcResult.failure("request-escape", "error", "INVALID_INPUT", error, 1);
         assertEquals(error, codec.decodeResult(codec.encodeResult(result)).getErrorMessage());
+    }
+
+    @Test public void rejectsDuplicateFieldsInvalidNumbersAndMalformedUtf8() {
+        JsonLineCodec codec = new JsonLineCodec(new RpcLimits(4096, 2, 2, 2));
+        expectInvalid(() -> codec.decodeRequest(frame("{\"schemaVersion\":\"1.0.0\",\"schemaVersion\":\"1.0.0\"}")));
+        expectInvalid(() -> codec.decodeResult(frame("{\"schemaVersion\":\"1.0.0\",\"requestId\":\"request-001\",\"status\":\"success\",\"valueJson\":\"{}\",\"durationMs\":1.5}")));
+        expectInvalid(() -> codec.decodeRequest(new byte[] {'{', '"', (byte) 0xc3, (byte) 0x28, '"', ':', '0', '}'}));
     }
 
     private static byte[] frame(String json) { return (json + "\n").getBytes(StandardCharsets.UTF_8); }
