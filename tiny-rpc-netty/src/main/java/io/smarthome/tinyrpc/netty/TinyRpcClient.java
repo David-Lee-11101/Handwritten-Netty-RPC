@@ -130,9 +130,14 @@ public final class TinyRpcClient implements Closeable {
 
     @Override public void close() {
         if (!closed.compareAndSet(false, true)) return;
-        channel.close().syncUninterruptibly();
+        boolean calledFromOwnedEventLoop = channel.eventLoop().inEventLoop();
+        io.netty.channel.ChannelFuture channelClosed = channel.close();
         failAll(new ClosedChannelException());
-        eventLoop.shutdownGracefully(0, 2, TimeUnit.SECONDS).syncUninterruptibly();
+        io.netty.util.concurrent.Future<?> eventLoopTerminated = eventLoop.shutdownGracefully(0, 2, TimeUnit.SECONDS);
+        if (!calledFromOwnedEventLoop) {
+            channelClosed.syncUninterruptibly();
+            eventLoopTerminated.syncUninterruptibly();
+        }
     }
 
     private void failAll(Throwable failure) {

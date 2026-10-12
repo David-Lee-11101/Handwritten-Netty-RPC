@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -80,6 +81,62 @@ public class TinyRpcLoopbackTest {
         assertTrue("Failed connection leaked event-loop threads: " + newThreads(before), newThreads(before).isEmpty());
     }
 
+    @Test public void responseCallbackCanCloseClientWithoutWaitingOnItsOwnEventLoop() throws Exception {
+        RpcLimits limits = new RpcLimits(1024, 2, 2, 2);
+        java.util.Set<Long> before = nettyThreadIds();
+        try (TinyRpcServer server = TinyRpcServer.builder().limits(limits)
+                .register("sensor.service", "read", arguments -> "true").build().bind("127.0.0.1", 0)) {
+            TinyRpcClient client = TinyRpcClient.connect("127.0.0.1", server.port(), limits, null);
+            CompletableFuture<Void> closed = client.invoke(request("request-301", "sensor.service", "read", 1000))
+                    .thenRun(client::close);
+            closed.get(2, TimeUnit.SECONDS);
+            assertEquals(0, client.pendingCount());
+            assertEquals(0, client.queuedWriteCount());
+        }
+        awaitNoNewNettyThreads(before, "Response callback close leaked event-loop threads");
+    }
+
+    @Test public void telemetryCallbackCanCloseClientWithoutWaitingOnItsOwnEventLoop() throws Exception {
+        RpcLimits limits = new RpcLimits(1024, 2, 2, 2);
+        java.util.Set<Long> before = nettyThreadIds();
+        try (TinyRpcServer server = TinyRpcServer.builder().limits(limits)
+                .register("sensor.service", "read", arguments -> "true").build().bind("127.0.0.1", 0)) {
+            AtomicReference<TinyRpcClient> clientReference = new AtomicReference<>();
+            TinyRpcClient client = TinyRpcClient.connect("127.0.0.1", server.port(), limits, observation -> {
+                if ("server-to-client".equals(observation.getDirection())) clientReference.get().close();
+            });
+            clientReference.set(client);
+            assertTrue(client.invoke(request("request-302", "sensor.service", "read", 1000))
+                    .get(2, TimeUnit.SECONDS).isSuccess());
+            assertEquals(0, client.pendingCount());
+            assertEquals(0, client.queuedWriteCount());
+        }
+        awaitNoNewNettyThreads(before, "Telemetry callback close leaked event-loop threads");
+    }
+
+    @Test public void providerCallbackCanCloseOwnedServerWithoutWaitingOnDispatchThread() throws Exception {
+        RpcLimits limits = new RpcLimits(1024, 2, 2, 2);
+        java.util.Set<Long> before = nettyThreadIds();
+        AtomicReference<TinyRpcServer> serverReference = new AtomicReference<>();
+        TinyRpcServer server = TinyRpcServer.builder().limits(limits)
+                .register("control.service", "stop", arguments -> {
+                    serverReference.get().close();
+                    return "true";
+                }).build().bind("127.0.0.1", 0);
+        serverReference.set(server);
+        try (TinyRpcClient client = TinyRpcClient.connect("127.0.0.1", server.port(), limits, null)) {
+            try {
+                client.invoke(request("request-303", "control.service", "stop", 1000)).get(2, TimeUnit.SECONDS);
+            } catch (ExecutionException expectedCloseRace) {
+                assertTrue(expectedCloseRace.getCause() instanceof java.nio.channels.ClosedChannelException);
+            }
+            assertEquals(0, client.pendingCount());
+        } finally {
+            server.close();
+        }
+        awaitNoNewNettyThreads(before, "Provider callback close leaked event-loop threads");
+    }
+
     private static java.util.Set<Long> nettyThreadIds() {
         java.util.Set<Long> ids = new java.util.HashSet<>();
         for (Thread thread : Thread.getAllStackTraces().keySet()) if (thread.isAlive() && thread.getName().contains("nioEventLoopGroup")) ids.add(thread.getId());
@@ -87,6 +144,11 @@ public class TinyRpcLoopbackTest {
     }
     private static java.util.Set<Long> newThreads(java.util.Set<Long> before) {
         java.util.Set<Long> ids = nettyThreadIds(); ids.removeAll(before); return ids;
+    }
+    private static void awaitNoNewNettyThreads(java.util.Set<Long> before, String message) throws Exception {
+        long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(3);
+        while (!newThreads(before).isEmpty() && System.nanoTime() < deadline) Thread.sleep(20);
+        assertTrue(message + ": " + newThreads(before), newThreads(before).isEmpty());
     }
 
     @Test
