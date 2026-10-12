@@ -1,0 +1,23 @@
+Consumer/src/test/java/com/seclab/nettyClient/LegacyBenchmarkMain.java
+  s_7011714e525495::t_2ce15a232bd27b 1-172
+docs/CLEANUP_PLAN.md
+  s_7011714e525495::t_2ce15a232bd27b 1-26
+benchmarks/README.md
+  s_7011714e525495::t_2ce15a232bd27b 1-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "f47bbe816e679f9d13c6ff3627a7707035ae365c",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "恺撒 <weihaodong@xiaohongshu.com>"
+    }
+  }
+}
