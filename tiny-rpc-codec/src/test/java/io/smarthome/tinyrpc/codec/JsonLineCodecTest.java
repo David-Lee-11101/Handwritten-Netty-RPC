@@ -49,6 +49,18 @@ public class JsonLineCodecTest {
         expectInvalid(() -> codec.decodeResult(frame("{\"schemaVersion\":\"1.0.0\",\"requestId\":\"request-001\",\"status\":\"success\",\"valueJson\":\"{}\",\"durationMs\":0,\"extra\":1}")));
     }
 
+    @Test public void roundTripsEscapedPayloadAndErrorText() {
+        JsonLineCodec codec = new JsonLineCodec(new RpcLimits(4096, 2, 2, 2));
+        String arguments = "{\"message\":\"line one\\nline two \\\"quoted\\\" \\\\ slash 中文\"}";
+        RpcRequest request = new RpcRequest("trace-escape", "session-escape", "request-escape",
+                "sensor.service", "read", arguments, System.currentTimeMillis() + 1000);
+        assertEquals(arguments, codec.decodeRequest(codec.encodeRequest(request)).getArgumentsJson());
+
+        String error = "bad input: \\\"quoted\\\" \\\\ slash\nnext line 中文";
+        RpcResult result = RpcResult.failure("request-escape", "error", "INVALID_INPUT", error, 1);
+        assertEquals(error, codec.decodeResult(codec.encodeResult(result)).getErrorMessage());
+    }
+
     private static byte[] frame(String json) { return (json + "\n").getBytes(StandardCharsets.UTF_8); }
     private static void expectInvalid(Runnable action) {
         try { action.run(); throw new AssertionError("Expected invalid frame"); }
