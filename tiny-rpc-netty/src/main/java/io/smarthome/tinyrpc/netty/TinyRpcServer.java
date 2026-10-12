@@ -41,6 +41,9 @@ public final class TinyRpcServer implements Closeable {
     private final long monotonicOrigin = System.nanoTime();
     private final AtomicBoolean closed = new AtomicBoolean();
     private final java.util.concurrent.atomic.AtomicLong telemetryFailures = new java.util.concurrent.atomic.AtomicLong();
+    private final java.util.concurrent.atomic.AtomicInteger pendingWrites = new java.util.concurrent.atomic.AtomicInteger();
+    private final java.util.concurrent.atomic.AtomicLong pendingWriteBytes = new java.util.concurrent.atomic.AtomicLong();
+    private final java.util.concurrent.atomic.AtomicLong rejectedWrites = new java.util.concurrent.atomic.AtomicLong();
     private Channel channel;
 
     private TinyRpcServer(Builder builder) {
@@ -66,6 +69,9 @@ public final class TinyRpcServer implements Closeable {
 
     public int port() { return ((InetSocketAddress) channel.localAddress()).getPort(); }
     public long telemetryFailureCount() { return telemetryFailures.get(); }
+    public int pendingWriteCount() { return pendingWrites.get(); }
+    public long pendingWriteBytes() { return pendingWriteBytes.get(); }
+    public long rejectedWriteCount() { return rejectedWrites.get(); }
 
     @Override public void close() {
         if (!closed.compareAndSet(false, true)) return;
@@ -76,7 +82,9 @@ public final class TinyRpcServer implements Closeable {
     }
 
     private final class RequestHandler extends SimpleChannelInboundHandler<ByteBuf> {
+        private final java.util.concurrent.atomic.AtomicInteger peerWrites = new java.util.concurrent.atomic.AtomicInteger();
         @Override protected void channelRead0(ChannelHandlerContext context, ByteBuf frame) {
+            if (!context.channel().isWritable()) { rejectedWrites.incrementAndGet(); context.close(); return; }
             byte[] bytes = new byte[frame.readableBytes()]; frame.readBytes(bytes);
             final RpcRequest request;
             try { request = codec.decodeRequest(bytes); request.validate(System.currentTimeMillis()); }
@@ -110,13 +118,37 @@ public final class TinyRpcServer implements Closeable {
         }
 
         private void write(ChannelHandlerContext context, RpcRequest request, RpcResult result) {
-            byte[] bytes = codec.encodeResult(result);
+            if (!context.channel().isActive() || !context.channel().isWritable()) {
+                rejectedWrites.incrementAndGet(); context.close(); return;
+            }
+            if (!reserveWrite(pendingWrites)) { rejectedWrites.incrementAndGet(); context.close(); return; }
+            if (!reserveWrite(peerWrites)) {
+                pendingWrites.decrementAndGet(); rejectedWrites.incrementAndGet(); context.close(); return;
+            }
+            final byte[] bytes;
+            try { bytes = codec.encodeResult(result); }
+            catch (RuntimeException invalid) { releaseWrite(0); context.close(); return; }
+            pendingWriteBytes.addAndGet(bytes.length);
             observe(new TransportObservation(request.getTraceId(), request.getSessionId(), request.getRequestId(),
                     "server-to-client", bytes.length, System.nanoTime() - monotonicOrigin));
-            context.writeAndFlush(Unpooled.wrappedBuffer(bytes));
+            try {
+                context.writeAndFlush(Unpooled.wrappedBuffer(bytes)).addListener(completed -> releaseWrite(bytes.length));
+            } catch (RuntimeException failure) { releaseWrite(bytes.length); context.close(); }
+        }
+
+        private void releaseWrite(int bytes) {
+            pendingWriteBytes.addAndGet(-bytes); peerWrites.decrementAndGet(); pendingWrites.decrementAndGet();
         }
 
         @Override public void exceptionCaught(ChannelHandlerContext context, Throwable cause) { context.close(); }
+    }
+
+    private boolean reserveWrite(java.util.concurrent.atomic.AtomicInteger counter) {
+        while (true) {
+            int current = counter.get();
+            if (current >= limits.getMaxQueuedWrites()) return false;
+            if (counter.compareAndSet(current, current + 1)) return true;
+        }
     }
 
     private static long elapsedMs(long started) { return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - started); }

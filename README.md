@@ -40,7 +40,7 @@ sequenceDiagram
 ## Design boundaries
 
 - The provider executes only `(serviceId, operation)` pairs registered by the application. Request data cannot select a Java class or reflective method.
-- Frame bytes, pending requests, queued writes, and provider work are bounded.
+- Frame bytes, pending requests, queued writes, and provider work are bounded. Server response writes have per-peer and global reservations; a non-writable or over-budget peer is closed, and every terminal write releases its reservation. `pendingWriteCount()`, `pendingWriteBytes()`, and `rejectedWriteCount()` expose this boundary.
 - Provider callbacks execute on a bounded dispatch pool, outside Netty event-loop threads.
 - Timeout, cancellation, write failure, malformed input, peer disconnect, and owned shutdown clear correlation state.
 - Optional telemetry listener failures preserve transport outcomes and increment `telemetryFailureCount()` on the client/server. Required integration evidence must reject incomplete traces; a successful RPC alone cannot prove instrumentation.
