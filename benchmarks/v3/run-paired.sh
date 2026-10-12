@@ -25,8 +25,10 @@ legacy_commit="$($node_binary -e "process.stdout.write(JSON.parse(require('fs').
 candidate_commit="$($node_binary -e "process.stdout.write(JSON.parse(require('fs').readFileSync(process.argv[1])).candidate.commit)" "$identities")"
 legacy_harness="$($node_binary -e "process.stdout.write(JSON.parse(require('fs').readFileSync(process.argv[1])).legacy.harness.sha256)" "$identities")"
 candidate_harness="$($node_binary -e "process.stdout.write(JSON.parse(require('fs').readFileSync(process.argv[1])).candidate.harness.sha256)" "$identities")"
-legacy_classpath="$legacy_root/Consumer/target/test-classes:$legacy_root/Consumer/target/classes:$(tr -d '\r\n' < "$legacy_root/Consumer/target/v3-classpath.txt")"
-candidate_classpath="$candidate_root/tiny-rpc-netty/target/test-classes:$candidate_root/tiny-rpc-netty/target/classes:$(tr -d '\r\n' < "$candidate_root/tiny-rpc-netty/target/v3-classpath.txt")"
+legacy_runtime="$($node_binary -e "process.stdout.write(JSON.parse(require('fs').readFileSync(process.argv[1])).legacy.runtimeManifest.directory)" "$identities")"
+candidate_runtime="$($node_binary -e "process.stdout.write(JSON.parse(require('fs').readFileSync(process.argv[1])).candidate.runtimeManifest.directory)" "$identities")"
+legacy_classpath="$legacy_root/Consumer/target/test-classes:$legacy_root/Consumer/target/classes:$legacy_root/$legacy_runtime/*"
+candidate_classpath="$candidate_root/tiny-rpc-netty/target/test-classes:$candidate_root/tiny-rpc-netty/target/classes:$candidate_root/$candidate_runtime/*"
 
 sequence=0
 run_one() {

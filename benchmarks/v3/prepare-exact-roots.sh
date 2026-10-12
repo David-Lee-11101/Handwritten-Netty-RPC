@@ -11,27 +11,27 @@ node_binary="${BENCHMARK_NODE:?Set BENCHMARK_NODE to the fixed Node executable}"
 export JAVA_HOME="$java_home_override"
 
 prepare_legacy() {
-  rm -rf "$legacy_root/Consumer/target/v3-runtime-deps" "$legacy_root/Consumer/target/v3-classpath.txt" \
-    "$legacy_root/Consumer/target/v3-runtime-manifest.json" "$legacy_root/Consumer/target/v3-structure.json"
+  rm -rf "$legacy_root/Consumer/target/v3-runtime-deps" "$legacy_root/Consumer/target/v3-runtime-manifest.json" \
+    "$legacy_root/Consumer/target/v3-class-manifest.json" "$legacy_root/Consumer/target/v3-structure.json"
   "$maven_binary" -q -s "$maven_settings" -f "$legacy_root/pom.xml" clean install -DskipTests
-  "$maven_binary" -q -s "$maven_settings" -f "$legacy_root/pom.xml" -pl Consumer dependency:build-classpath \
-    -DincludeScope=runtime -Dmdep.outputFile=target/v3-classpath.txt
   "$maven_binary" -q -s "$maven_settings" -f "$legacy_root/pom.xml" -pl Consumer,Provider dependency:copy-dependencies \
     -DincludeScope=runtime -DoutputDirectory="$legacy_root/Consumer/target/v3-runtime-deps"
   "$node_binary" "$coordinator_root/benchmarks/v3/runtime-manifest.mjs" \
     "$legacy_root/Consumer/target/v3-runtime-deps" "$legacy_root/Consumer/target/v3-runtime-manifest.json"
+  "$node_binary" "$coordinator_root/benchmarks/v3/tree-manifest.mjs" "$legacy_root/Consumer/target/v3-class-manifest.json" \
+    "main=$legacy_root/Consumer/target/classes" "benchmark=$legacy_root/Consumer/target/test-classes"
 }
 
 prepare_candidate() {
-  rm -rf "$candidate_root/tiny-rpc-netty/target/v3-runtime-deps" "$candidate_root/tiny-rpc-netty/target/v3-classpath.txt" \
-    "$candidate_root/tiny-rpc-netty/target/v3-runtime-manifest.json" "$candidate_root/tiny-rpc-netty/target/v3-structure.json"
+  rm -rf "$candidate_root/tiny-rpc-netty/target/v3-runtime-deps" "$candidate_root/tiny-rpc-netty/target/v3-runtime-manifest.json" \
+    "$candidate_root/tiny-rpc-netty/target/v3-class-manifest.json" "$candidate_root/tiny-rpc-netty/target/v3-structure.json"
   "$maven_binary" -q -s "$maven_settings" -f "$candidate_root/pom.xml" clean install -DskipTests
-  "$maven_binary" -q -s "$maven_settings" -f "$candidate_root/pom.xml" -pl tiny-rpc-netty dependency:build-classpath \
-    -DincludeScope=runtime -Dmdep.outputFile=target/v3-classpath.txt
   "$maven_binary" -q -s "$maven_settings" -f "$candidate_root/pom.xml" -pl tiny-rpc-netty dependency:copy-dependencies \
     -DincludeScope=runtime -DoutputDirectory="$candidate_root/tiny-rpc-netty/target/v3-runtime-deps"
   "$node_binary" "$coordinator_root/benchmarks/v3/runtime-manifest.mjs" \
     "$candidate_root/tiny-rpc-netty/target/v3-runtime-deps" "$candidate_root/tiny-rpc-netty/target/v3-runtime-manifest.json"
+  "$node_binary" "$coordinator_root/benchmarks/v3/tree-manifest.mjs" "$candidate_root/tiny-rpc-netty/target/v3-class-manifest.json" \
+    "main=$candidate_root/tiny-rpc-netty/target/classes" "benchmark=$candidate_root/tiny-rpc-netty/target/test-classes"
   "$node_binary" "$coordinator_root/benchmarks/measure-structure.mjs" \
     "$candidate_root/tiny-rpc-netty/target/v3-runtime-deps" "$candidate_root/tiny-rpc-netty/target/v3-structure.json" \
     "$candidate_root/tiny-rpc-core/target/tiny-rpc-core-0.0.1-SNAPSHOT.jar" \
