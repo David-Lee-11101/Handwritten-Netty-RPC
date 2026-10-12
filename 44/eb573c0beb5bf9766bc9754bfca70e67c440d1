@@ -1,0 +1,29 @@
+benchmarks/v3-attempt-1/README.md
+  s_7011714e525495::t_7697382700608f 1-16
+benchmarks/v3-attempt-1/analysis.json
+  s_7011714e525495::t_9d0c85725e61fe 1-202
+benchmarks/v3-attempt-1/environment.json
+  s_7011714e525495::t_87495601a9fe5c 1-11
+benchmarks/v3-attempt-1/files.sha256
+  s_7011714e525495::t_b0811a2d5aa7c8 1-53
+benchmarks/v3-attempt-1/identities.json
+  s_7011714e525495::t_cecac7e8ac6612 1-80
+benchmarks/v3-attempt-1/records.jsonl
+  s_7011714e525495::t_7d72df7456c8fc 1-24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "44eb573c0beb5bf9766bc9754bfca70e67c440d1",
+  "prompts": {},
+  "sessions": {
+    "s_7011714e525495": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12529-718f-7053-849a-2fa10f2720ee",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "David Lee <109534658+David-Lee-11101@users.noreply.github.com>"
+    }
+  }
+}
