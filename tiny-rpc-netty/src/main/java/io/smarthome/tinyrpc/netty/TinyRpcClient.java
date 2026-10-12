@@ -57,7 +57,7 @@ public final class TinyRpcClient implements Closeable {
                     .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000)
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override protected void initChannel(SocketChannel socket) {
-                            socket.pipeline().addLast(new LineBasedFrameDecoder(limits.getMaxFrameBytes(), true, true));
+                            socket.pipeline().addLast(new LineBasedFrameDecoder(limits.getMaxFrameBytes() - 1, false, true));
                             socket.pipeline().addLast(new ResultHandler());
                         }
                     }).connect(host, port).sync().channel();
@@ -175,7 +175,7 @@ public final class TinyRpcClient implements Closeable {
             PendingCall call = pending.get(result.getRequestId());
             if (call != null && removePending(result.getRequestId(), call)) {
                 observe(new TransportObservation(call.traceId, call.sessionId, result.getRequestId(),
-                        "server-to-client", bytes.length + 1, System.nanoTime() - monotonicOrigin));
+                        "server-to-client", bytes.length, System.nanoTime() - monotonicOrigin));
                 call.future.complete(result);
             }
         }

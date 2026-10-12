@@ -60,7 +60,7 @@ public final class TinyRpcServer implements Closeable {
                 .option(ChannelOption.SO_BACKLOG, 128).childOption(ChannelOption.TCP_NODELAY, true)
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override protected void initChannel(SocketChannel socket) {
-                        socket.pipeline().addLast(new LineBasedFrameDecoder(limits.getMaxFrameBytes(), true, true));
+                        socket.pipeline().addLast(new LineBasedFrameDecoder(limits.getMaxFrameBytes() - 1, false, true));
                         socket.pipeline().addLast(new RequestHandler());
                     }
                 }).bind(host, port).sync().channel();
