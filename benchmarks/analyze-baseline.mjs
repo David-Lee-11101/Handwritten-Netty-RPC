@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import crypto from 'node:crypto';
 
-const [inputPath, outputPath] = process.argv.slice(2);
-if (!inputPath || !outputPath) {
-  throw new Error('usage: node analyze-baseline.mjs <runs.jsonl> <acceptance-envelope.json>');
+const [inputPath, structurePath, outputPath] = process.argv.slice(2);
+if (!inputPath || !structurePath || !outputPath) {
+  throw new Error('usage: node analyze-baseline.mjs <runs.jsonl> <structure.json> <acceptance-envelope.json>');
 }
 
 const runs = fs.readFileSync(inputPath, 'utf8').trim().split(/\r?\n/).filter(Boolean).map(JSON.parse);
@@ -39,6 +39,7 @@ const envelope = {
     nonInferiorityPass: 'upper95CI(new-minus-baseline)<=frozenMarginNanos'
   },
   baseline: summaries,
+  baselineStructure: JSON.parse(fs.readFileSync(structurePath, 'utf8')),
   frozenMargins: {
     startupNanos: Math.max(resolutionNanos, startupDispersion),
     p95LatencyNanos: Math.max(resolutionNanos, latencyDispersion)
@@ -51,7 +52,11 @@ const envelope = {
     coreArtifactBytes: 'strictly-less-than-baseline-combined-artifact-bytes',
     runtimeDependencyClosureBytes: 'strictly-less-than-baseline-runtime-dependency-closure-bytes'
   },
-  inputSha256: crypto.createHash('sha256').update(fs.readFileSync(inputPath)).digest('hex')
+  inputs: {
+    runsSha256: crypto.createHash('sha256').update(fs.readFileSync(inputPath)).digest('hex'),
+    structureSha256: crypto.createHash('sha256').update(fs.readFileSync(structurePath)).digest('hex')
+  }
 };
 fs.writeFileSync(outputPath, `${JSON.stringify(envelope, null, 2)}\n`, { flag: 'wx' });
+
 

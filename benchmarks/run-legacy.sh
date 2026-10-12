@@ -5,6 +5,7 @@ repository_root="$(cd "$(dirname "$0")/.." && pwd)"
 output_file="${1:-$repository_root/benchmarks/baseline-runs.jsonl}"
 maven_settings="${MAVEN_SETTINGS:?Set MAVEN_SETTINGS to the clean Maven settings file}"
 java_home_override="${BENCHMARK_JAVA_HOME:?Set BENCHMARK_JAVA_HOME to the fixed JDK 8 home}"
+node_binary="${BENCHMARK_NODE:?Set BENCHMARK_NODE to the fixed Node executable}"
 run_count="${BENCHMARK_RUNS:-12}"
 
 if [[ "$run_count" -lt 10 ]]; then
@@ -19,6 +20,15 @@ export PATH="$JAVA_HOME/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 /usr/local/apache-maven-3.9.9/bin/mvn -q -s "$maven_settings" -DskipTests test-compile \
   dependency:build-classpath -Dmdep.includeScope=test \
   -Dmdep.outputFile="$repository_root/Consumer/target/benchmark-classpath.txt" -pl Consumer -am
+/usr/local/apache-maven-3.9.9/bin/mvn -q -s "$maven_settings" -DskipTests package \
+  dependency:build-classpath -Dmdep.includeScope=runtime \
+  -Dmdep.outputFile="$repository_root/Consumer/target/runtime-classpath.txt"
+
+"$node_binary" "$repository_root/benchmarks/measure-structure.mjs" \
+  "$repository_root/Consumer/target/runtime-classpath.txt" \
+  "$repository_root/benchmarks/baseline-structure.json" \
+  "$repository_root/Consumer/target/Consumer-0.0.1-SNAPSHOT.jar" \
+  "$repository_root/Provider/target/Provider-0.0.1-SNAPSHOT.jar"
 
 classpath="$repository_root/Consumer/target/test-classes:$repository_root/Consumer/target/classes:$(tr -d '\r\n' < "$repository_root/Consumer/target/benchmark-classpath.txt")"
 temporary_file="$(mktemp "${TMPDIR:-/tmp}/tiny-rpc-baseline.XXXXXX")"
